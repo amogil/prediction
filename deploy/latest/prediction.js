@@ -78,7 +78,7 @@
       this.userId = __bind(this.userId, this);
       this.generateUserId = __bind(this.generateUserId, this);
       this.api = new PredictionAPI(Settings.API_URL, Settings.API_KEY);
-      jQuery('.product-view').each(function(e) {
+      jQuery('.product-view').each(function(_, e) {
         var form, item;
         if (form = jQuery('form', jQuery(e)).first()) {
           if (item = /^.*\/(\d+)\//.exec(form.action)[1]) {
