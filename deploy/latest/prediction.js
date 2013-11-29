@@ -18,7 +18,7 @@
     }
 
     PredictionAPI.prototype.registerUser = function(userId) {
-      return this.request({
+      return this.request('users.json', {
         pio_uid: userId
       });
     };
@@ -27,24 +27,24 @@
       if (categoriesIds == null) {
         categoriesIds = [];
       }
-      return this.request({
+      return this.request('items.json', {
         pio_iid: itemId
       }, categoriesIds.join(','));
     };
 
     PredictionAPI.prototype.registerUserItemAction = function(userId, itemId, action) {
-      return this.request({
+      return this.request('actions/u2i.json', {
         pio_uid: userId,
         pio_iid: itemId,
         pio_action: action
       });
     };
 
-    PredictionAPI.prototype.request = function(data) {
+    PredictionAPI.prototype.request = function(path, data) {
       data['pio_appkey'] = this.apiKey;
       return jQuery.ajax({
         crossDomain: true,
-        url: "" + this.url + "/users.json",
+        url: "" + this.url + "/" + path,
         type: 'POST',
         data: data
       });
@@ -55,26 +55,31 @@
   })();
 
   Tracker = (function() {
+    Tracker.API_KEY = '3ZyaNfVEcyE5kUsZSJipRuN3gfdLl85t8VvWn5F8QhHhi24xXX1vhjKdX8r6vFOz';
+
+    Tracker.API_URL = 'http://193.107.237.171:8000';
+
     function Tracker() {
       this.userId = __bind(this.userId, this);
       this.generateUserId = __bind(this.generateUserId, this);
-      var form, item;
-      this.api = new PredictionAPI('http://193.107.237.171:8000', 'lwvY8a9XV9syFyGx4bGIGECatUwVyUr5yrCFWz4964G9cdiQPtZa10rpcyde203t');
-      jQuery('.product-view').each(function(e) {});
-      if (form = jQuery('form', jQuery(e)).first()) {
-        if (item = /^.*\/(\d+)\//.exec(form.action)[1]) {
-          this.api.registerItem(item);
-          jQuery(form).find('.add-to-cart button').click(function() {
-            this.api.registerUserItemAction(this.userId(), item, 'conversion');
-            return true;
-          });
-          jQuery(form).find('.link-wishlist').click(function() {
-            this.api.registerUserItemAction(this.userId(), item, 'like');
-            return true;
-          });
-          this.api.registerUserItemAction(this.userId(), item, 'view');
+      this.api = new PredictionAPI(this.API_URL, this.API_KEY);
+      jQuery('.product-view').each(function(e) {
+        var form, item;
+        if (form = jQuery('form', jQuery(e)).first()) {
+          if (item = /^.*\/(\d+)\//.exec(form.action)[1]) {
+            this.api.registerItem(item);
+            jQuery(form).find('.add-to-cart button').click(function() {
+              this.api.registerUserItemAction(this.userId(), item, 'conversion');
+              return true;
+            });
+            jQuery(form).find('.link-wishlist').click(function() {
+              this.api.registerUserItemAction(this.userId(), item, 'like');
+              return true;
+            });
+            return this.api.registerUserItemAction(this.userId(), item, 'view');
+          }
         }
-      }
+      });
     }
 
     Tracker.prototype.generateUserId = function() {
