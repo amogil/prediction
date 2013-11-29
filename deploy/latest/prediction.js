@@ -78,7 +78,7 @@
 
     Settings.API_KEY = 'KdpSqVJNTquC4wzt0vuW8898gunhCNaoiDZXyCbUbIalFcE1FyBtsOZvZhF4tjeu';
 
-    Settings.API_URL = 'http://193.107.237.171:8000';
+    Settings.API_URL = 'http://193.107.237.171:81';
 
     Settings.USER_ID_COOKIE_NAME = 'puid';
 
