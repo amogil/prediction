@@ -46,7 +46,7 @@
         _this = this;
       url = "" + this.url + "/" + path;
       if (Settings.MODE === 'debug') {
-        console.log("Posting " + (JSON.stringify(data)) + " to " + url + "...");
+        console.log("Posting " + (JSON.stringify(data)) + " to " + url + " ...");
       }
       return jQuery.ajax({
         url: url,
@@ -59,9 +59,9 @@
             return console.log('Success!');
           }
         },
-        error: function(_, status) {
+        error: function(xhr) {
           if (Settings.MODE === 'debug') {
-            return console.log("Error! HTTP Code: " + status);
+            return console.log("Error! HTTP Code: " + xhr);
           }
         }
       });
