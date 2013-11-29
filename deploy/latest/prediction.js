@@ -129,7 +129,7 @@
         user_id = this.generateUserId();
         this.api.registerUser(user_id);
         jQuery.cookie(Settings.USER_ID_COOKIE_NAME, user_id, {
-          expires: 9999,
+          expires: 365 * 5,
           domain: "." + location.host
         });
       }
