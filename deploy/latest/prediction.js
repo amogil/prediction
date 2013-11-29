@@ -103,10 +103,10 @@
         _this.api.registerItem(item_id);
         _this.api.registerUserItemAction(_this.userId(), item_id, 'view');
         form.find('.add-to-cart button').click(function() {
-          return this.api.registerUserItemAction(this.userId(), item_id, 'conversion');
+          return _this.api.registerUserItemAction(_this.userId(), item_id, 'conversion');
         });
         return form.find('.link-wishlist').click(function() {
-          return this.api.registerUserItemAction(this.userId(), item_id, 'like');
+          return _this.api.registerUserItemAction(_this.userId(), item_id, 'like');
         });
       });
     }

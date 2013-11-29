@@ -7,9 +7,9 @@ class Tracker
       @api.registerItem item_id
       @api.registerUserItemAction @userId(), item_id, 'view'
 
-      form.find('.add-to-cart button').click () ->
+      form.find('.add-to-cart button').click () =>
         @api.registerUserItemAction @userId(), item_id, 'conversion'
-      form.find('.link-wishlist').click () ->
+      form.find('.link-wishlist').click () =>
         @api.registerUserItemAction @userId(), item_id, 'like'
 
   generateUserId: () =>
