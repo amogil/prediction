@@ -1,7 +1,7 @@
 class Tracker
   constructor: ->
     @api = new PredictionAPI Settings.API_URL, Settings.API_KEY
-    jQuery('.product-view').each (e) ->
+    jQuery('.product-view').each (_, e) ->
       if form = jQuery('form', jQuery(e)).first()
         if item = /^.*\/(\d+)\//.exec(form.action)[1]
           @api.registerItem item
