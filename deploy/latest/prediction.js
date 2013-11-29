@@ -42,17 +42,28 @@
     };
 
     PredictionAPI.prototype.request = function(path, data) {
-      var url;
+      var url,
+        _this = this;
       url = "" + this.url + "/" + path;
       if (Settings.MODE === 'debug') {
-        console.log("Posted " + (JSON.stringify(data)) + " to " + url);
+        console.log("Posting " + (JSON.stringify(data)) + " to " + url + "...");
       }
       return jQuery.ajax({
         url: url,
         type: 'POST',
         data: jQuery.extend({
           pio_appkey: this.apiKey
-        }, data)
+        }, data),
+        success: function() {
+          if (Settings.MODE === 'debug') {
+            return console.log('Success!');
+          }
+        },
+        error: function(_, status) {
+          if (Settings.MODE === 'debug') {
+            return console.log("Error! HTTP Code: " + status);
+          }
+        }
       });
     };
 
