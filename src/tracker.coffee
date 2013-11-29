@@ -24,5 +24,5 @@ class Tracker
     unless user_id
       user_id = @generateUserId()
       @api.registerUser(user_id)
-      jQuery.cookie(Settings.USER_ID_COOKIE_NAME, user_id, expires: 365 * 5, domain: ".#{location.host}")
+      jQuery.cookie(Settings.USER_ID_COOKIE_NAME, user_id, expires: 365 * 10, path: '/', domain: ".#{location.host}")
     user_id
