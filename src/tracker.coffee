@@ -18,7 +18,7 @@ class Tracker
 
   generateUserId: () =>
     random_user_id = ''
-    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+    alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
     i = 0
     while i < 8
       random_user_id += alphabet.charAt(Math.floor(Math.random() * alphabet.length))
