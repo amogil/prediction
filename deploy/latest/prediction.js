@@ -52,9 +52,9 @@
         url: url,
         type: 'POST',
         contentType: 'application/json',
-        data: jQuery.extend({
+        data: JSON.stringify(jQuery.extend({
           pio_appkey: this.apiKey
-        }, data),
+        }, data)),
         success: function() {
           if (Settings.is_debug()) {
             return console.log('Success!');
