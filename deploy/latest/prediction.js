@@ -79,13 +79,14 @@
     function Tracker() {
       this.userId = __bind(this.userId, this);
       this.generateUserId = __bind(this.generateUserId, this);
+      var _this = this;
       this.api = new PredictionAPI(Settings.API_URL, Settings.API_KEY);
       jQuery('.product-view form').each(function(_, f) {
         var form, item_id;
         form = jQuery(f);
         item_id = form.find("input[name='product']").val();
-        this.api.registerItem(item_id);
-        this.api.registerUserItemAction(this.userId(), item_id, 'view');
+        _this.api.registerItem(item_id);
+        _this.api.registerUserItemAction(_this.userId(), item_id, 'view');
         form.find('.add-to-cart button').click(function() {
           return this.api.registerUserItemAction(this.userId(), item_id, 'conversion');
         });
