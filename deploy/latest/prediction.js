@@ -28,8 +28,9 @@
         categoriesIds = [];
       }
       return this.request('items.json', {
-        pio_iid: itemId
-      }, categoriesIds.join(','));
+        pio_iid: itemId,
+        pio_itypes: categoriesIds.join(',')
+      });
     };
 
     PredictionAPI.prototype.registerUserItemAction = function(userId, itemId, action) {
@@ -47,7 +48,6 @@
         console.log("Posted " + (JSON.stringify(data)) + " to " + url);
       }
       return jQuery.ajax({
-        crossDomain: true,
         url: url,
         type: 'POST',
         data: jQuery.extend({
