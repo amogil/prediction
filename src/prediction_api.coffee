@@ -14,7 +14,7 @@ class PredictionAPI
 
   request: (data) =>
     data['pio_appkey'] = @apiKey
-    $.ajax
+    jQuery.ajax
       crossDomain: true
       url: "#{@url}/users.json"
       type: 'POST'
