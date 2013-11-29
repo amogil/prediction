@@ -59,9 +59,9 @@
             return console.log('Success!');
           }
         },
-        error: function(xhr) {
+        error: function(_xhr, _textStatus, error) {
           if (Settings.MODE === 'debug') {
-            return console.log("Error! HTTP Code: " + xhr);
+            return console.log("Error: " + error + "!");
           }
         }
       });

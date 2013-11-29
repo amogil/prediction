@@ -21,5 +21,5 @@ class PredictionAPI
       data: jQuery.extend({pio_appkey: @apiKey}, data)
       success: () =>
         console.log('Success!') if Settings.MODE == 'debug'
-      error: (xhr) =>
-        console.log("Error! HTTP Code: #{xhr}") if Settings.MODE == 'debug'
+      error: (_xhr, _textStatus, error) =>
+        console.log("Error: #{error}!") if Settings.MODE == 'debug'
