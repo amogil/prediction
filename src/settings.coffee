@@ -1,5 +1,5 @@
 class Settings
   @MODE = 'debug'
-  @API_KEY: '3ZyaNfVEcyE5kUsZSJipRuN3gfdLl85t8VvWn5F8QhHhi24xXX1vhjKdX8r6vFOz'
+  @API_KEY: 'KdpSqVJNTquC4wzt0vuW8898gunhCNaoiDZXyCbUbIalFcE1FyBtsOZvZhF4tjeu'
   @API_URL: 'http://193.107.237.171:8000'
   @USER_ID_COOKIE_NAME: 'puid'
