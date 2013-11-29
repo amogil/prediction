@@ -25,7 +25,7 @@
 
     PredictionAPI.prototype.registerItem = function(itemId, categoriesIds) {
       if (categoriesIds == null) {
-        categoriesIds = [];
+        categoriesIds = ['default'];
       }
       return this.request('items.json', {
         pio_iid: itemId,

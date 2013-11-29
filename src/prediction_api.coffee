@@ -6,7 +6,7 @@ class PredictionAPI
   registerUser: (userId) =>
     @request 'users.json', pio_uid: userId
 
-  registerItem: (itemId, categoriesIds = []) =>
+  registerItem: (itemId, categoriesIds = ['default']) =>
     @request 'items.json', pio_iid: itemId, pio_itypes: categoriesIds.join ','
 
   registerUserItemAction: (userId, itemId, action) =>
