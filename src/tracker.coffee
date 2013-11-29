@@ -1,9 +1,6 @@
 class Tracker
-  @API_KEY: '3ZyaNfVEcyE5kUsZSJipRuN3gfdLl85t8VvWn5F8QhHhi24xXX1vhjKdX8r6vFOz'
-  @API_URL: 'http://193.107.237.171:8000'
-
   constructor: ->
-    @api = new PredictionAPI @.API_URL, @.API_KEY
+    @api = new PredictionAPI Settings.API_URL, Settings.API_KEY
     jQuery('.product-view').each (e) ->
       if form = jQuery('form', jQuery(e)).first()
         if item = /^.*\/(\d+)\//.exec(form.action)[1]

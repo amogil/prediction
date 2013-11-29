@@ -13,9 +13,10 @@ class PredictionAPI
     @request 'actions/u2i.json', pio_uid: userId, pio_iid: itemId, pio_action: action
 
   request: (path, data) =>
-    data['pio_appkey'] = @apiKey
+    url = "#{@url}/#{path}"
+    console.log("Posted #{JSON.stringify(data)} to #{url}")
     jQuery.ajax
       crossDomain: true
-      url: "#{@url}/#{path}"
+      url: url
       type: 'POST'
-      data: data
+      data: jQuery.extend({pio_appkey: @apiKey}, data)
