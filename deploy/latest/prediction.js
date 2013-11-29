@@ -46,7 +46,7 @@
         _this = this;
       url = "" + this.url + "/" + path;
       if (Settings.is_debug()) {
-        console.log("Posting " + (JSON.stringify(data)) + " to " + url + " ...");
+        console.log("Posting " + (JSON.stringify(data)) + " to " + url);
       }
       return jQuery.ajax({
         url: url,

@@ -14,7 +14,7 @@ class PredictionAPI
 
   request: (path, data) =>
     url = "#{@url}/#{path}"
-    console.log("Posting #{JSON.stringify(data)} to #{url} ...") if Settings.is_debug()
+    console.log("Posting #{JSON.stringify(data)} to #{url}") if Settings.is_debug()
     jQuery.ajax
       url: url
       type: 'POST'
