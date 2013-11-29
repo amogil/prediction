@@ -51,6 +51,7 @@
       return jQuery.ajax({
         url: url,
         type: 'POST',
+        contentType: 'application/json',
         data: jQuery.extend({
           pio_appkey: this.apiKey
         }, data),

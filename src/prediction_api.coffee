@@ -18,6 +18,7 @@ class PredictionAPI
     jQuery.ajax
       url: url
       type: 'POST'
+      contentType: 'application/json'
       data: jQuery.extend({pio_appkey: @apiKey}, data)
       success: () =>
         console.log('Success!') if Settings.is_debug()
