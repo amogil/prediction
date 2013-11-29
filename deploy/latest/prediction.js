@@ -65,7 +65,7 @@
 
     Settings.MODE = 'debug';
 
-    Settings.API_KEY = '3ZyaNfVEcyE5kUsZSJipRuN3gfdLl85t8VvWn5F8QhHhi24xXX1vhjKdX8r6vFOz';
+    Settings.API_KEY = 'KdpSqVJNTquC4wzt0vuW8898gunhCNaoiDZXyCbUbIalFcE1FyBtsOZvZhF4tjeu';
 
     Settings.API_URL = 'http://193.107.237.171:8000';
 
@@ -110,6 +110,7 @@
       var user_id;
       user_id = jQuery.cookie(Settings.USER_ID_COOKIE_NAME);
       if (!user_id) {
+        user_id = this.generateUserId();
         this.api.registerUser(user_id);
         jQuery.cookie(Settings.USER_ID_COOKIE_NAME, user_id, {
           expires: 9999,
