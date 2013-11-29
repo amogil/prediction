@@ -69,6 +69,8 @@
 
     Settings.API_URL = 'http://193.107.237.171:8000';
 
+    Settings.USER_ID_COOKIE_NAME = 'puid';
+
     return Settings;
 
   })();
@@ -78,45 +80,39 @@
       this.userId = __bind(this.userId, this);
       this.generateUserId = __bind(this.generateUserId, this);
       this.api = new PredictionAPI(Settings.API_URL, Settings.API_KEY);
-      jQuery('.product-view').each(function(_, e) {
-        var form, item;
-        if (form = jQuery('form', jQuery(e)).first()) {
-          if (item = /^.*\/(\d+)\//.exec(form.action)[1]) {
-            this.api.registerItem(item);
-            jQuery(form).find('.add-to-cart button').click(function() {
-              this.api.registerUserItemAction(this.userId(), item, 'conversion');
-              return true;
-            });
-            jQuery(form).find('.link-wishlist').click(function() {
-              this.api.registerUserItemAction(this.userId(), item, 'like');
-              return true;
-            });
-            return this.api.registerUserItemAction(this.userId(), item, 'view');
-          }
-        }
+      jQuery('.product-view form').each(function(_, f) {
+        var form, item_id;
+        form = jQuery(f);
+        item_id = form.find("input[name='product']").val();
+        this.api.registerItem(item_id);
+        this.api.registerUserItemAction(this.userId(), item_id, 'view');
+        form.find('.add-to-cart button').click(function() {
+          return this.api.registerUserItemAction(this.userId(), item_id, 'conversion');
+        });
+        return form.find('.link-wishlist').click(function() {
+          return this.api.registerUserItemAction(this.userId(), item_id, 'like');
+        });
       });
     }
 
     Tracker.prototype.generateUserId = function() {
-      var alphabet, i, random_user_id;
+      var alphabet, random_user_id, _, _i;
       random_user_id = '';
       alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      i = 0;
-      while (i < 8) {
+      for (_ = _i = 1; _i <= 8; _ = ++_i) {
         random_user_id += alphabet.charAt(Math.floor(Math.random() * alphabet.length));
-        i++;
       }
       return random_user_id;
     };
 
     Tracker.prototype.userId = function() {
       var user_id;
-      user_id = jQuery.cookie('puid');
+      user_id = jQuery.cookie(Settings.USER_ID_COOKIE_NAME);
       if (!user_id) {
         this.api.registerUser(user_id);
-        jQuery.cookie('puid', user_id, {
+        jQuery.cookie(Settings.USER_ID_COOKIE_NAME, user_id, {
           expires: 9999,
-          domain: ''
+          domain: "." + location.host
         });
       }
       return user_id;
