@@ -84,20 +84,3 @@ jQuery('.product-view').each(function(i) {
         }
     }
 })
- 
-/* Consider the grid */
-// ain't working right 'cuz I don't know JS
-/*
-jQuery('.category-products .item').each(function(i) {
-    if (buy = jQuery(this).find('.product-shop button')[0]) {
-        if (item = /^setLocation\('.*\/(\d+)\/'\)$/.exec(buy.attributes.onclick.value)[1]) {
-            jQuery(buy).bind('click',
-                function(e) { notifyUserItem(getUser(), item, 'conversion'); return true }
-            )
-            jQuery(this).find('.link-wishlist').bind('click',
-                function(e) { notifyUserItem(getUser(), item, 'like'); return true }
-            )
-        }
-    }
-})
-*/
