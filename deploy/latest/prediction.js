@@ -45,7 +45,7 @@
       var url,
         _this = this;
       url = "" + this.url + "/" + path;
-      if (Settings.MODE === 'debug') {
+      if (Settings.is_debug()) {
         console.log("Posting " + (JSON.stringify(data)) + " to " + url + " ...");
       }
       return jQuery.ajax({
@@ -55,12 +55,12 @@
           pio_appkey: this.apiKey
         }, data),
         success: function() {
-          if (Settings.MODE === 'debug') {
+          if (Settings.is_debug()) {
             return console.log('Success!');
           }
         },
         error: function(_xhr, _textStatus, error) {
-          if (Settings.MODE === 'debug') {
+          if (Settings.is_debug()) {
             return console.log("Error: " + error + "!");
           }
         }
@@ -81,6 +81,10 @@
     Settings.API_URL = 'http://193.107.237.171:8000';
 
     Settings.USER_ID_COOKIE_NAME = 'puid';
+
+    Settings.is_debug = function() {
+      return this.MODE === 'debug';
+    };
 
     return Settings;
 

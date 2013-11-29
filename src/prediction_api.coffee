@@ -14,12 +14,12 @@ class PredictionAPI
 
   request: (path, data) =>
     url = "#{@url}/#{path}"
-    console.log("Posting #{JSON.stringify(data)} to #{url} ...") if Settings.MODE == 'debug'
+    console.log("Posting #{JSON.stringify(data)} to #{url} ...") if Settings.is_debug()
     jQuery.ajax
       url: url
       type: 'POST'
       data: jQuery.extend({pio_appkey: @apiKey}, data)
       success: () =>
-        console.log('Success!') if Settings.MODE == 'debug'
+        console.log('Success!') if Settings.is_debug()
       error: (_xhr, _textStatus, error) =>
-        console.log("Error: #{error}!") if Settings.MODE == 'debug'
+        console.log("Error: #{error}!") if Settings.is_debug()
