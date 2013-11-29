@@ -14,7 +14,7 @@ class PredictionAPI
 
   request: (path, data) =>
     url = "#{@url}/#{path}"
-    console.log("Posted #{JSON.stringify(data)} to #{url}")
+    console.log("Posted #{JSON.stringify(data)} to #{url}") if Settings.MODE == 'debug'
     jQuery.ajax
       crossDomain: true
       url: url

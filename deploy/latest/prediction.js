@@ -43,7 +43,9 @@
     PredictionAPI.prototype.request = function(path, data) {
       var url;
       url = "" + this.url + "/" + path;
-      console.log("Posted " + (JSON.stringify(data)) + " to " + url);
+      if (Settings.MODE === 'debug') {
+        console.log("Posted " + (JSON.stringify(data)) + " to " + url);
+      }
       return jQuery.ajax({
         crossDomain: true,
         url: url,
