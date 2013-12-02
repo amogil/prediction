@@ -189,6 +189,7 @@
       this.process = __bind(this.process, this);
       this.store = new CookiesActionStore();
       this.api = new PredictionAPI();
+      this.enqueueProcess();
     }
 
     Registerer.prototype.process = function() {

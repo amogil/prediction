@@ -6,6 +6,7 @@ class Registerer
 	constructor: ->
 		@store = new CookiesActionStore()
 		@api = new PredictionAPI()
+		@enqueueProcess()
 
 	process: =>
 		@store.getActions().each (a) =>
