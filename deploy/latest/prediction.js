@@ -51,7 +51,7 @@
         url: url,
         type: 'POST',
         contentType: 'application/json',
-        dataType: 'html',
+        dataType: 'json',
         crossDomain: true,
         data: JSON.stringify(jQuery.extend({
           pio_appkey: Settings.API_KEY
