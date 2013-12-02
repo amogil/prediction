@@ -21,13 +21,18 @@ class Tracker
 		[1..8].map(() -> alphabet.charAt(Math.floor(Math.random() * alphabet.length))).reduce((a, b) -> a + b)
 
 	currentCategory: () =>
-		jQuery('.breadcrumbs li').each (_, item) ->
+		item_cat = (item) ->
 			starts_with_category = (s) -> s.indexOf('category') == 0
 			to_cats_list = (_, e) -> jQuery(e).attr('class').split(' ').filter(starts_with_category)
 			withCats = jQuery(item).map to_cats_list
 			cat = withCats[0]
-			return match.last() if cat && (match = /category(\d+)/.exec(cat[0]))
-			'default'
+			if cat && (match = /category(\d+)/.exec cat[0])
+				match[match.length - 1]
+			else
+				null
+
+		categories = jQuery('.breadcrumbs li').map((_, item) -> item_cat(item)).filter((cat) -> cat)
+		categories[0]
 
 	userId: =>
 		user_id = jQuery.cookie(Settings.USER_ID_COOKIE_NAME)

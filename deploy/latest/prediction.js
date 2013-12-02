@@ -124,7 +124,8 @@
     };
 
     Tracker.prototype.currentCategory = function() {
-      return jQuery('.breadcrumbs li').each(function(_, item) {
+      var categories, item_cat;
+      item_cat = function(item) {
         var cat, match, starts_with_category, to_cats_list, withCats;
         starts_with_category = function(s) {
           return s.indexOf('category') === 0;
@@ -135,10 +136,17 @@
         withCats = jQuery(item).map(to_cats_list);
         cat = withCats[0];
         if (cat && (match = /category(\d+)/.exec(cat[0]))) {
-          return match.last();
+          return match[match.length - 1];
+        } else {
+          return null;
         }
-        return 'default';
+      };
+      categories = jQuery('.breadcrumbs li').map(function(_, item) {
+        return item_cat(item);
+      }).filter(function(cat) {
+        return cat;
       });
+      return categories[0];
     };
 
     Tracker.prototype.userId = function() {
