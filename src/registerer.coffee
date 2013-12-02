@@ -1,7 +1,7 @@
 class Registerer
 	ACTION_REGISTER_ITEM: 1
 	ACTION_VIEW: 2
-	ACTION_REGISTER_USER: 2
+	ACTION_REGISTER_USER: 3
 
 	constructor: ->
 		@store = new CookiesActionStore()

@@ -173,7 +173,7 @@
 
     Registerer.prototype.ACTION_VIEW = 2;
 
-    Registerer.prototype.ACTION_REGISTER_USER = 2;
+    Registerer.prototype.ACTION_REGISTER_USER = 3;
 
     function Registerer() {
       this.userId = __bind(this.userId, this);
