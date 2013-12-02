@@ -2,6 +2,14 @@ class Tracker
 	constructor: ->
 		@api = new PredictionAPI()
 		@trackProductView()
+		@subscribeCompare()
+
+	subscribeCompare: () =>
+		jQuery('.link-compare').click (e) =>
+			item = jQuery(e.target)
+			if (match = /\/product_compare\/add\/product\/(\d+)\//.exec item.attr('onclick'))
+				item_id = match[match.length - 1]
+				@api.registerUserItemAction @userId(), item_id, 'view'
 
 	trackProductView: () =>
 		jQuery('.product-view form').each (_, f) =>

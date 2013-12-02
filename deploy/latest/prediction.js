@@ -98,9 +98,23 @@
       this.currentCategory = __bind(this.currentCategory, this);
       this.generateUserId = __bind(this.generateUserId, this);
       this.trackProductView = __bind(this.trackProductView, this);
+      this.subscribeCompare = __bind(this.subscribeCompare, this);
       this.api = new PredictionAPI();
       this.trackProductView();
+      this.subscribeCompare();
     }
+
+    Tracker.prototype.subscribeCompare = function() {
+      var _this = this;
+      return jQuery('.link-compare').click(function(e) {
+        var item, item_id, match;
+        item = jQuery(e.target);
+        if ((match = /\/product_compare\/add\/product\/(\d+)\//.exec(item.attr('onclick')))) {
+          item_id = match[match.length - 1];
+          return _this.api.registerUserItemAction(_this.userId(), item_id, 'view');
+        }
+      });
+    };
 
     Tracker.prototype.trackProductView = function() {
       var _this = this;
