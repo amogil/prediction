@@ -20,22 +20,18 @@
 
     CookiesActionStore.prototype.load = function() {
       var cookie, e;
-      this.data = (function() {
-        try {
-          cookie = jQuery.cookie(Settings.INFO_COOKIE_NAME);
-          if (cookie) {
-            return JSON.parse(cookie);
-          } else {
-            return [];
-          }
-        } catch (_error) {
-          e = _error;
-          if (Settings.is_debug()) {
-            console.log("Error while loading actions data from cookies: " + e);
-          }
-          return [];
+      this.data = [];
+      try {
+        cookie = jQuery.cookie(Settings.INFO_COOKIE_NAME);
+        if (cookie) {
+          this.data = JSON.parse(cookie);
         }
-      })();
+      } catch (_error) {
+        e = _error;
+        if (Settings.is_debug()) {
+          console.log("Error while loading actions data from cookies: " + e);
+        }
+      }
       return this.data;
     };
 

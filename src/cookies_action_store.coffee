@@ -2,12 +2,12 @@ class CookiesActionStore
 	ALPHABET: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 
 	load: =>
-		@data = try
+		@data = []
+		try
 			cookie = jQuery.cookie(Settings.INFO_COOKIE_NAME)
-			if cookie then JSON.parse(cookie) else []
+			@data = JSON.parse(cookie) if cookie
 		catch e
 			console.log("Error while loading actions data from cookies: #{e}") if Settings.is_debug()
-			[]
 		@data
 
 	current: => @data || @load()
