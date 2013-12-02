@@ -19,15 +19,15 @@
     CookiesActionStore.prototype.ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
     CookiesActionStore.prototype.load = function() {
-      var cookie, e;
+      var cookie, data, e;
       this.data = [];
       try {
         cookie = jQuery.cookie(Settings.INFO_COOKIE_NAME);
         if (cookie) {
-          this.data = JSON.parse(cookie);
-        }
-        if (!(this.data instanceof Array)) {
-          this.data = [];
+          data = JSON.parse(cookie);
+          if (this.data instanceof Array) {
+            this.data = data;
+          }
         }
       } catch (_error) {
         e = _error;
