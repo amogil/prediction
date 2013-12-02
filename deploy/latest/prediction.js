@@ -45,7 +45,7 @@
     CookiesActionStore.prototype.save = function() {
       if (this.data.length === 0) {
         if (Settings.is_debug()) {
-          console.log("Cleaning up tracking data");
+          console.log('Cleaning up tracking data');
         }
         return jQuery.removeCookie(Settings.INFO_COOKIE_NAME);
       } else {
