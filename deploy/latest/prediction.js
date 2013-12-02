@@ -68,7 +68,7 @@
     };
 
     CookiesActionStore.prototype.getAction = function(id) {
-      return this.getActions().filter(function(_, e) {
+      return this.getActions().filter(function(e) {
         return e[0] === id;
       })[0];
     };
@@ -78,7 +78,7 @@
     };
 
     CookiesActionStore.prototype.deleteAction = function(id) {
-      this.data = this.current().filter(function(_, e) {
+      this.data = this.current().filter(function(e) {
         return e[0] !== id;
       });
       return this.save();
@@ -352,7 +352,7 @@
       };
       categories = jQuery('.breadcrumbs li').map(function(_, item) {
         return item_cat(item);
-      }).filter(function(_, c) {
+      }).filter(function(c) {
         return c;
       });
       return categories[0];

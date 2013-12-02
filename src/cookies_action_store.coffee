@@ -27,13 +27,13 @@ class CookiesActionStore
 		@save()
 
 	getAction: (id) =>
-		@getActions().filter((_, e) -> e[0] == id)[0]
+		@getActions().filter((e) -> e[0] == id)[0]
 
 	getActions: =>
 		@current()
 
 	deleteAction: (id) =>
-		@data = @current().filter((_, e) -> e[0] != id)
+		@data = @current().filter((e) -> e[0] != id)
 		@save()
 
 	generate: (count) =>
