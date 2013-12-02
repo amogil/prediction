@@ -1,6 +1,6 @@
 class Tracker
 	constructor: ->
-		@api = new PredictionAPI()
+		@reg = new Registerer()
 		@trackProductView()
 		@subscribeCompare()
 
@@ -9,24 +9,19 @@ class Tracker
 			item = jQuery(e.target)
 			if (match = /\/product_compare\/add\/product\/(\d+)\//.exec item.attr('onclick'))
 				item_id = match[match.length - 1]
-				@api.registerUserItemAction @userId(), item_id, 'view'
+				@reg.registerItemAddToCompareAction item_id
 
 	trackProductView: () =>
 		jQuery('.product-view form').each (_, f) =>
 			form = jQuery(f)
 			item_id = form.find("input[name='product']").val()
-			@api.registerItem item_id, [@currentCategory()]
-			@api.registerUserItemAction @userId(), item_id, 'view'
+			@reg.registerItem item_id, [@currentCategory()]
+			@reg.registerItemViewAction item_id
 
 #      form.find('.add-to-cart button').click () =>
-#        @api.registerUserItemAction @userId(), item_id, 'conversion'
+#        @reg.registerUserItemAction @userId(), item_id, 'conversion'
 #      form.find('.link-wishlist').click () =>
-#        @api.registerUserItemAction @userId(), item_id, 'like'
-
-
-	generateUserId: () =>
-		alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-		[1..8].map(() -> alphabet.charAt(Math.floor(Math.random() * alphabet.length))).reduce((a, b) -> a + b)
+#        @reg.registerUserItemAction @userId(), item_id, 'like'
 
 	currentCategory: () =>
 		item_cat = (item) ->
@@ -38,14 +33,5 @@ class Tracker
 				match[match.length - 1]
 			else
 				null
-
 		categories = jQuery('.breadcrumbs li').map((_, item) -> item_cat(item)).filter((_, c) -> c)
 		categories[0]
-
-	userId: =>
-		user_id = jQuery.cookie(Settings.USER_ID_COOKIE_NAME)
-		unless user_id
-			user_id = @generateUserId()
-			@api.registerUser(user_id)
-			jQuery.cookie(Settings.USER_ID_COOKIE_NAME, user_id, expires: 365 * 10, path: '/', domain: ".#{location.host}")
-		user_id
