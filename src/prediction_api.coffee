@@ -16,9 +16,10 @@ class PredictionAPI
     console.log("Posting #{JSON.stringify(data)} to #{url}") if Settings.is_debug()
     jQuery.ajax
       url: url
-      crossDomain: true
       type: 'POST'
       contentType: 'application/json'
+      dataType: 'html'
+      crossDomain: true
       data: JSON.stringify(jQuery.extend({pio_appkey: Settings.API_KEY}, data))
       success: () =>
         console.log('Success!') if Settings.is_debug()

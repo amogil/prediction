@@ -49,9 +49,10 @@
       }
       return jQuery.ajax({
         url: url,
-        crossDomain: true,
         type: 'POST',
         contentType: 'application/json',
+        dataType: 'html',
+        crossDomain: true,
         data: JSON.stringify(jQuery.extend({
           pio_appkey: Settings.API_KEY
         }, data)),
