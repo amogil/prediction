@@ -85,13 +85,14 @@
     };
 
     CookiesActionStore.prototype.generate = function(count) {
-      var _i, _results;
+      var _i, _results,
+        _this = this;
       return (function() {
         _results = [];
         for (var _i = 1; 1 <= count ? _i <= count : _i >= count; 1 <= count ? _i++ : _i--){ _results.push(_i); }
         return _results;
       }).apply(this).map(function() {
-        return this.ALPHABET.charAt(Math.floor(Math.random() * this.ALPHABET.length));
+        return _this.ALPHABET.charAt(Math.floor(Math.random() * _this.ALPHABET.length));
       }).reduce(function(a, b) {
         return a + b;
       });

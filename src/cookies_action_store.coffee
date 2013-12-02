@@ -37,4 +37,4 @@ class CookiesActionStore
 		@save()
 
 	generate: (count) =>
-		[1..count].map(() -> @ALPHABET.charAt(Math.floor(Math.random() * @ALPHABET.length))).reduce((a, b) -> a + b)
+		[1..count].map(() => @ALPHABET.charAt(Math.floor(Math.random() * @ALPHABET.length))).reduce((a, b) -> a + b)
