@@ -26,6 +26,9 @@
         if (cookie) {
           this.data = JSON.parse(cookie);
         }
+        if (!(this.data instanceof Array)) {
+          this.data = [];
+        }
       } catch (_error) {
         e = _error;
         if (Settings.is_debug()) {

@@ -6,6 +6,7 @@ class CookiesActionStore
 		try
 			cookie = jQuery.cookie(Settings.INFO_COOKIE_NAME)
 			@data = JSON.parse(cookie) if cookie
+			@data = [] unless @data instanceof Array
 		catch e
 			console.log("Error while loading actions data from cookies: #{e}") if Settings.is_debug()
 		@data
