@@ -26,8 +26,10 @@ class CookiesActionStore
 	newId: => @generate(2) + @current().length
 
 	addAction: (type, params) =>
-		@current().push([@newId(), type, params])
+		id = @newId()
+		@current().push([id, type, params])
 		@save()
+		id
 
 	getAction: (id) =>
 		@getActions().filter((e) -> e[0] == id)[0]

@@ -9,28 +9,27 @@ class Registerer
 		@enqueueProcess()
 
 	process: =>
-		@store.getActions().each (a) =>
-			action = @store.getAction(a[0])
+		@store.getActions().each (action) =>
 			@process_action(action[0], action[1], action[2]) if action
 
 	enqueueProcess: =>
 		setTimeout((() => @process()), 0)
 
 	registerUser: (user_id) =>
-		@store.addAction(@ACTION_REGISTER_USER, user_id)
-		@enqueueProcess()
+		@save_and_process_action(@ACTION_REGISTER_USER, user_id)
 
 	registerItem: (item_id, categories) =>
-		@store.addAction(@ACTION_REGISTER_ITEM, [item_id, categories])
-		@enqueueProcess()
+		@save_and_process_action(@ACTION_REGISTER_ITEM, [item_id, categories])
 
 	registerItemViewAction: (item_id) =>
-		@store.addAction(@ACTION_VIEW, item_id)
-		@enqueueProcess()
+		@save_and_process_action(@ACTION_VIEW, item_id)
 
 	registerItemAddToCompareAction: (item_id) =>
-		@store.addAction(@ACTION_VIEW, item_id)
-		@enqueueProcess()
+		@save_and_process_action(@ACTION_VIEW, item_id)
+
+	save_and_process_action: (type, params) =>
+		id = @store.addAction(type, params)
+		@process_action(id, type, params)
 
 	process_action: (id, type, params) =>
 		try

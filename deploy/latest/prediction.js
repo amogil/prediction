@@ -65,8 +65,11 @@
     };
 
     CookiesActionStore.prototype.addAction = function(type, params) {
-      this.current().push([this.newId(), type, params]);
-      return this.save();
+      var id;
+      id = this.newId();
+      this.current().push([id, type, params]);
+      this.save();
+      return id;
     };
 
     CookiesActionStore.prototype.getAction = function(id) {
@@ -184,6 +187,7 @@
     function Registerer() {
       this.userId = __bind(this.userId, this);
       this.process_action = __bind(this.process_action, this);
+      this.save_and_process_action = __bind(this.save_and_process_action, this);
       this.registerItemAddToCompareAction = __bind(this.registerItemAddToCompareAction, this);
       this.registerItemViewAction = __bind(this.registerItemViewAction, this);
       this.registerItem = __bind(this.registerItem, this);
@@ -197,9 +201,7 @@
 
     Registerer.prototype.process = function() {
       var _this = this;
-      return this.store.getActions().each(function(a) {
-        var action;
-        action = _this.store.getAction(a[0]);
+      return this.store.getActions().each(function(action) {
         if (action) {
           return _this.process_action(action[0], action[1], action[2]);
         }
@@ -214,23 +216,25 @@
     };
 
     Registerer.prototype.registerUser = function(user_id) {
-      this.store.addAction(this.ACTION_REGISTER_USER, user_id);
-      return this.enqueueProcess();
+      return this.save_and_process_action(this.ACTION_REGISTER_USER, user_id);
     };
 
     Registerer.prototype.registerItem = function(item_id, categories) {
-      this.store.addAction(this.ACTION_REGISTER_ITEM, [item_id, categories]);
-      return this.enqueueProcess();
+      return this.save_and_process_action(this.ACTION_REGISTER_ITEM, [item_id, categories]);
     };
 
     Registerer.prototype.registerItemViewAction = function(item_id) {
-      this.store.addAction(this.ACTION_VIEW, item_id);
-      return this.enqueueProcess();
+      return this.save_and_process_action(this.ACTION_VIEW, item_id);
     };
 
     Registerer.prototype.registerItemAddToCompareAction = function(item_id) {
-      this.store.addAction(this.ACTION_VIEW, item_id);
-      return this.enqueueProcess();
+      return this.save_and_process_action(this.ACTION_VIEW, item_id);
+    };
+
+    Registerer.prototype.save_and_process_action = function(type, params) {
+      var id;
+      id = this.store.addAction(type, params);
+      return this.process_action(id, type, params);
     };
 
     Registerer.prototype.process_action = function(id, type, params) {
