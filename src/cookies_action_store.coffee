@@ -2,7 +2,9 @@ class CookiesActionStore
 
 	load: =>
 		@data = try
-			JSON.parse(jQuery.cookie(Settings.INFO_COOKIE_NAME))
+			cookie = jQuery.cookie(Settings.INFO_COOKIE_NAME)
+			return [] unless cookie
+			JSON.parse(cookie)
 		catch e
 			console.log("Error while loading actions data from cookies: #{e}") if Settings.is_debug()
 			[]
@@ -35,4 +37,4 @@ class CookiesActionStore
 		@save()
 
 	generate: (count) =>
-		[1..count].map(() -> @ALPHABET.charAt(Math.floor(Math.random() * @alphabet.length))).reduce((a, b) -> a + b)
+		[1..count].map(() -> @ALPHABET.charAt(Math.floor(Math.random() * @ALPHABET.length))).reduce((a, b) -> a + b)
