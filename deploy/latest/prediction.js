@@ -5,7 +5,6 @@
 
   CookiesActionStore = (function() {
     function CookiesActionStore() {
-      this.userId = __bind(this.userId, this);
       this.generate = __bind(this.generate, this);
       this.deleteAction = __bind(this.deleteAction, this);
       this.getActions = __bind(this.getActions, this);
@@ -18,12 +17,15 @@
     }
 
     CookiesActionStore.prototype.load = function() {
-      var _;
+      var e;
       this.data = (function() {
         try {
           return JSON.parse(jQuery.cookie(Settings.INFO_COOKIE_NAME));
         } catch (_error) {
-          _ = _error;
+          e = _error;
+          if (Settings.is_debug()) {
+            console.log("Error while loading actions data from cookies: " + e);
+          }
           return [];
         }
       })();
@@ -35,6 +37,9 @@
     };
 
     CookiesActionStore.prototype.save = function() {
+      if (Settings.is_debug()) {
+        console.log("Saving tracking data: " + this.data);
+      }
       if (this.data.length === 0) {
         return jQuery.cookie(Settings.INFO_COOKIE_NAME, null);
       } else {
@@ -85,21 +90,6 @@
       });
     };
 
-    CookiesActionStore.prototype.userId = function() {
-      var user_id;
-      user_id = jQuery.cookie(Settings.USER_ID_COOKIE_NAME);
-      if (!user_id) {
-        user_id = this.generate(8);
-        this.registerUser(user_id);
-        jQuery.cookie(Settings.USER_ID_COOKIE_NAME, user_id, {
-          expires: 365 * 10,
-          path: '/',
-          domain: "." + location.host
-        });
-      }
-      return user_id;
-    };
-
     return CookiesActionStore;
 
   })();
@@ -117,31 +107,28 @@
       jQuery.support.cors = true;
     }
 
-    PredictionAPI.prototype.registerUser = function(userId) {
-      return this.request('users.json', {
+    PredictionAPI.prototype.registerUser = function(userId, successCallback) {
+      return this.request('users.json', successCallback, {
         pio_uid: userId
       });
     };
 
-    PredictionAPI.prototype.registerItem = function(itemId, categoriesIds) {
-      if (categoriesIds == null) {
-        categoriesIds = ['default'];
-      }
-      return this.request('items.json', {
+    PredictionAPI.prototype.registerItem = function(itemId, categoriesIds, successCallback) {
+      return this.request('items.json', successCallback, {
         pio_iid: itemId,
         pio_itypes: categoriesIds.join(',')
       });
     };
 
-    PredictionAPI.prototype.registerUserItemAction = function(userId, itemId, action) {
-      return this.request('actions/u2i.json', {
+    PredictionAPI.prototype.registerUserItemAction = function(userId, itemId, action, successCallback) {
+      return this.request('actions/u2i.json', successCallback, {
         pio_uid: userId,
         pio_iid: itemId,
         pio_action: action
       });
     };
 
-    PredictionAPI.prototype.request = function(path, data) {
+    PredictionAPI.prototype.request = function(path, successCallback, data) {
       var url,
         _this = this;
       url = "" + Settings.API_URL + "/" + path;
@@ -159,7 +146,10 @@
         }, data)),
         success: function() {
           if (Settings.is_debug()) {
-            return console.log('Success!');
+            console.log('Success!');
+          }
+          if (successCallback) {
+            return successCallback();
           }
         },
         error: function(_xhr, _textStatus, error) {
@@ -179,12 +169,17 @@
 
     Registerer.prototype.ACTION_VIEW = 2;
 
+    Registerer.prototype.ACTION_REGISTER_USER = 2;
+
     Registerer.prototype.ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
     function Registerer() {
+      this.userId = __bind(this.userId, this);
+      this.process_action = __bind(this.process_action, this);
       this.registerItemAddToCompareAction = __bind(this.registerItemAddToCompareAction, this);
       this.registerItemViewAction = __bind(this.registerItemViewAction, this);
       this.registerItem = __bind(this.registerItem, this);
+      this.registerUser = __bind(this.registerUser, this);
       this.enqueueProcess = __bind(this.enqueueProcess, this);
       this.process = __bind(this.process, this);
       this.store = new CookiesActionStore();
@@ -194,12 +189,10 @@
     Registerer.prototype.process = function() {
       var _this = this;
       return this.store.getActions().each(function(_, a) {
-        var action, id, params, type;
+        var action;
         action = _this.store.getAction(a[0]);
         if (action) {
-          id = action[0];
-          type = action[1];
-          return params = action[2];
+          return _this.process_action(action[0], action[1], action[2]);
         }
       });
     };
@@ -209,6 +202,11 @@
       return setTimeout((function() {
         return _this.process();
       }), 0);
+    };
+
+    Registerer.prototype.registerUser = function(user_id) {
+      this.store.addAction(this.ACTION_REGISTER_USER, user_id);
+      return this.enqueueProcess();
     };
 
     Registerer.prototype.registerItem = function(item_id, categories) {
@@ -224,6 +222,49 @@
     Registerer.prototype.registerItemAddToCompareAction = function(item_id) {
       this.store.addAction(this.ACTION_VIEW, item_id);
       return this.enqueueProcess();
+    };
+
+    Registerer.prototype.process_action = function(id, type, params) {
+      var e, on_success;
+      try {
+        if (!id || !type || !params) {
+          if (Settings.is_debug()) {
+            console.log("Warning while processing action. Bad params: " + id + ", " + type + ", " + params);
+          }
+          return;
+        }
+        on_success = function() {
+          return this.store.deleteAction(id);
+        };
+        if (type === this.ACTION_REGISTER_USER) {
+          return this.api.registerUser(params, on_success);
+        } else if (type === this.ACTION_VIEW) {
+          return this.api.registerUserItemAction(this.userId(), params, 'view', on_success);
+        } else if (type === this.ACTION_REGISTER_ITEM) {
+          return this.api.registerItem(params[0], params[1], on_success);
+        }
+      } catch (_error) {
+        e = _error;
+        if (Settings.is_debug()) {
+          console.log("Error while processing action: " + e);
+        }
+        return this.store.deleteAction(id);
+      }
+    };
+
+    Registerer.prototype.userId = function() {
+      var user_id;
+      user_id = jQuery.cookie(Settings.USER_ID_COOKIE_NAME);
+      if (!user_id) {
+        user_id = this.generate(8);
+        this.registerUser(user_id);
+        jQuery.cookie(Settings.USER_ID_COOKIE_NAME, user_id, {
+          expires: 365 * 10,
+          path: '/',
+          domain: "." + location.host
+        });
+      }
+      return user_id;
     };
 
     return Registerer;

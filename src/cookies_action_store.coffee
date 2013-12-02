@@ -3,13 +3,15 @@ class CookiesActionStore
 	load: =>
 		@data = try
 			JSON.parse(jQuery.cookie(Settings.INFO_COOKIE_NAME))
-		catch _
+		catch e
+			console.log("Error while loading actions data from cookies: #{e}") if Settings.is_debug()
 			[]
 		@data
 
 	current: => @data || load()
 
 	save: =>
+		console.log("Saving tracking data: #{@data}") if Settings.is_debug()
 		if @data.length == 0
 			jQuery.cookie(Settings.INFO_COOKIE_NAME, null)
 		else
@@ -34,11 +36,3 @@ class CookiesActionStore
 
 	generate: (count) =>
 		[1..count].map(() -> @ALPHABET.charAt(Math.floor(Math.random() * @alphabet.length))).reduce((a, b) -> a + b)
-
-	userId: =>
-		user_id = jQuery.cookie(Settings.USER_ID_COOKIE_NAME)
-		unless user_id
-			user_id = @generate(8)
-			@registerUser(user_id)
-			jQuery.cookie(Settings.USER_ID_COOKIE_NAME, user_id, expires: 365 * 10, path: '/', domain: ".#{location.host}")
-		user_id
