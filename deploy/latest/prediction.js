@@ -25,7 +25,7 @@
         cookie = jQuery.cookie(Settings.INFO_COOKIE_NAME);
         if (cookie) {
           data = JSON.parse(cookie);
-          if (this.data instanceof Array) {
+          if (data instanceof Array) {
             this.data = data;
           }
         }
