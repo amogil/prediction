@@ -192,25 +192,15 @@
       this.registerItemViewAction = __bind(this.registerItemViewAction, this);
       this.registerItem = __bind(this.registerItem, this);
       this.registerUser = __bind(this.registerUser, this);
-      this.enqueueProcess = __bind(this.enqueueProcess, this);
-      this.process = __bind(this.process, this);
+      var _this = this;
       this.store = new CookiesActionStore();
       this.api = new PredictionAPI();
-      this.enqueueProcess();
-    }
-
-    Registerer.prototype.process = function() {
-      var _this = this;
-      return this.store.getActions().each(function(action) {
+      this.store.getActions().each(function(action) {
         if (action) {
           return _this.process_action(action[0], action[1], action[2]);
         }
       });
-    };
-
-    Registerer.prototype.enqueueProcess = function() {
-      return setTimeout(this.process, 1000);
-    };
+    }
 
     Registerer.prototype.registerUser = function(user_id) {
       return this.save_and_process_action(this.ACTION_REGISTER_USER, user_id);

@@ -6,14 +6,8 @@ class Registerer
 	constructor: ->
 		@store = new CookiesActionStore()
 		@api = new PredictionAPI()
-		@enqueueProcess()
-
-	process: =>
 		@store.getActions().each (action) =>
 			@process_action(action[0], action[1], action[2]) if action
-
-	enqueueProcess: =>
-		setTimeout(@process, 1000)
 
 	registerUser: (user_id) =>
 		@save_and_process_action(@ACTION_REGISTER_USER, user_id)
