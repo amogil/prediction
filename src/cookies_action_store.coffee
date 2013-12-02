@@ -15,7 +15,7 @@ class CookiesActionStore
 	save: =>
 		console.log("Saving tracking data: #{@data}") if Settings.is_debug()
 		if @data.length == 0
-			jQuery.cookie(Settings.INFO_COOKIE_NAME, null)
+			jQuery.removeCookie(Settings.INFO_COOKIE_NAME)
 		else
 			jQuery.cookie(Settings.INFO_COOKIE_NAME, JSON.stringify(@data),
 				expires: 365 * 10, path: '/', domain: ".#{location.host}")

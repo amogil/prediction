@@ -44,7 +44,7 @@
         console.log("Saving tracking data: " + this.data);
       }
       if (this.data.length === 0) {
-        return jQuery.cookie(Settings.INFO_COOKIE_NAME, null);
+        return jQuery.removeCookie(Settings.INFO_COOKIE_NAME);
       } else {
         return jQuery.cookie(Settings.INFO_COOKIE_NAME, JSON.stringify(this.data), {
           expires: 365 * 10,
