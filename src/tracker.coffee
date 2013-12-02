@@ -18,9 +18,7 @@ class Tracker
 
 	generateUserId: () =>
 		alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-		random_user_id = ''
 		[1..8].map(() -> alphabet.charAt(Math.floor(Math.random() * alphabet.length))).reduce((a, b) -> a + b)
-		random_user_id
 
 	currentCategory: () =>
 		jQuery('.breadcrumbs li').each (_, item) ->
