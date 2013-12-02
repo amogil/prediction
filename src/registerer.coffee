@@ -13,7 +13,7 @@ class Registerer
 			@process_action(action[0], action[1], action[2]) if action
 
 	enqueueProcess: =>
-		setTimeout(@process, 0)
+		setTimeout(@process, 1000)
 
 	registerUser: (user_id) =>
 		@save_and_process_action(@ACTION_REGISTER_USER, user_id)
