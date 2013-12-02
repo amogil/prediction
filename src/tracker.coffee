@@ -25,7 +25,7 @@ class Tracker
 	currentCategory: () =>
 		jQuery('.breadcrumbs li').each (_, item) ->
 			starts_with_category = (s) -> s.indexOf('category') == 0
-			to_cats_list = (_, e) -> e.attr('class').split(' ').filter(starts_with_category)
+			to_cats_list = (_, e) -> jQuery(e).attr('class').split(' ').filter(starts_with_category)
 			withCats = jQuery(item).map to_cats_list
 			cat = withCats.first()
 			return match.last() if cat && (match = /category(\d+)/.exec(cat.first()))
