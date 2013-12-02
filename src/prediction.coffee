@@ -1,2 +1,2 @@
 jQuery(document).ready () ->
-  new Tracker()
+	new Tracker()

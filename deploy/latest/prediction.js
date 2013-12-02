@@ -95,32 +95,52 @@
   Tracker = (function() {
     function Tracker() {
       this.userId = __bind(this.userId, this);
+      this.currentCategory = __bind(this.currentCategory, this);
       this.generateUserId = __bind(this.generateUserId, this);
-      var _this = this;
+      this.trackProductView = __bind(this.trackProductView, this);
       this.api = new PredictionAPI();
-      jQuery('.product-view form').each(function(_, f) {
+      this.trackProductView();
+    }
+
+    Tracker.prototype.trackProductView = function() {
+      var _this = this;
+      return jQuery('.product-view form').each(function(_, f) {
         var form, item_id;
         form = jQuery(f);
         item_id = form.find("input[name='product']").val();
-        _this.api.registerItem(item_id);
-        _this.api.registerUserItemAction(_this.userId(), item_id, 'view');
-        form.find('.add-to-cart button').click(function() {
-          return _this.api.registerUserItemAction(_this.userId(), item_id, 'conversion');
-        });
-        return form.find('.link-wishlist').click(function() {
-          return _this.api.registerUserItemAction(_this.userId(), item_id, 'like');
-        });
+        _this.api.registerItem(item_id, [_this.currentCategory()]);
+        return _this.api.registerUserItemAction(_this.userId(), item_id, 'view');
       });
-    }
+    };
 
     Tracker.prototype.generateUserId = function() {
-      var alphabet, random_user_id, _, _i;
-      random_user_id = '';
+      var alphabet, random_user_id;
       alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      for (_ = _i = 1; _i <= 8; _ = ++_i) {
-        random_user_id += alphabet.charAt(Math.floor(Math.random() * alphabet.length));
-      }
+      random_user_id = '';
+      [1, 2, 3, 4, 5, 6, 7, 8].map(function() {
+        return alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+      }).reduce(function(a, b) {
+        return a + b;
+      });
       return random_user_id;
+    };
+
+    Tracker.prototype.currentCategory = function() {
+      return jQuery('.breadcrumbs li').each(function(_, item) {
+        var cat, match, starts_with_category, to_cats_list, withCats;
+        starts_with_category = function(s) {
+          return s.indexOf('category') === 0;
+        };
+        to_cats_list = function(e) {
+          return e.attr('class').split(' ').filter(starts_with_category);
+        };
+        withCats = jQuery(item).map(to_cats_list);
+        cat = withCats.first();
+        if (cat && (match = /category(\d+)/.exec(cat.first()))) {
+          return match.last();
+        }
+        return 'default';
+      });
     };
 
     Tracker.prototype.userId = function() {
