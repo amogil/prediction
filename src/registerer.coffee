@@ -8,7 +8,7 @@ class Registerer
 		@api = new PredictionAPI()
 
 	process: =>
-		@store.getActions().each (_, a) =>
+		@store.getActions().each (a) =>
 			action = @store.getAction(a[0])
 			@process_action(action[0], action[1], action[2]) if action
 

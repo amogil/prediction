@@ -194,7 +194,7 @@
 
     Registerer.prototype.process = function() {
       var _this = this;
-      return this.store.getActions().each(function(_, a) {
+      return this.store.getActions().each(function(a) {
         var action;
         action = _this.store.getAction(a[0]);
         if (action) {
