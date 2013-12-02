@@ -131,7 +131,7 @@
         starts_with_category = function(s) {
           return s.indexOf('category') === 0;
         };
-        to_cats_list = function(e) {
+        to_cats_list = function(_, e) {
           return e.attr('class').split(' ').filter(starts_with_category);
         };
         withCats = jQuery(item).map(to_cats_list);
