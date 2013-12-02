@@ -3,8 +3,6 @@ class Registerer
 	ACTION_VIEW: 2
 	ACTION_REGISTER_USER: 2
 
-	ALPHABET: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-
 	constructor: ->
 		@store = new CookiesActionStore()
 		@api = new PredictionAPI()

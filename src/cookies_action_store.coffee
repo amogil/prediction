@@ -1,4 +1,5 @@
 class CookiesActionStore
+	ALPHABET: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 
 	load: =>
 		@data = try

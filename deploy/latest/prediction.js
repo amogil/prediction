@@ -16,6 +16,8 @@
       this.load = __bind(this.load, this);
     }
 
+    CookiesActionStore.prototype.ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
     CookiesActionStore.prototype.load = function() {
       var cookie, e;
       this.data = (function() {
@@ -175,8 +177,6 @@
     Registerer.prototype.ACTION_VIEW = 2;
 
     Registerer.prototype.ACTION_REGISTER_USER = 2;
-
-    Registerer.prototype.ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
     function Registerer() {
       this.userId = __bind(this.userId, this);
