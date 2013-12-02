@@ -209,10 +209,7 @@
     };
 
     Registerer.prototype.enqueueProcess = function() {
-      var _this = this;
-      return setTimeout((function() {
-        return _this.process();
-      }), 0);
+      return setTimeout(this.process, 0);
     };
 
     Registerer.prototype.registerUser = function(user_id) {
