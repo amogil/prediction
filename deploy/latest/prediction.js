@@ -47,7 +47,10 @@
         if (Settings.is_debug()) {
           console.log('Cleaning up tracking data');
         }
-        return jQuery.removeCookie(Settings.INFO_COOKIE_NAME);
+        return jQuery.removeCookie(Settings.INFO_COOKIE_NAME, {
+          path: '/',
+          domain: "." + location.host
+        });
       } else {
         if (Settings.is_debug()) {
           console.log("Saving tracking data: " + this.data);
