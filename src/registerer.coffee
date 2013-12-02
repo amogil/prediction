@@ -36,7 +36,7 @@ class Registerer
 			if !id || !type || !params
 				console.log("Warning while processing action. Bad params: #{id}, #{type}, #{params}") if Settings.is_debug()
 				return
-			on_success = () -> @store.deleteAction(id)
+			on_success = () => @store.deleteAction(id)
 			if type == @ACTION_REGISTER_USER
 				@api.registerUser(params, on_success)
 			else if type == @ACTION_VIEW

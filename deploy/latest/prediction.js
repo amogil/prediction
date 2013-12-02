@@ -231,7 +231,8 @@
     };
 
     Registerer.prototype.process_action = function(id, type, params) {
-      var e, on_success;
+      var e, on_success,
+        _this = this;
       try {
         if (!id || !type || !params) {
           if (Settings.is_debug()) {
@@ -240,7 +241,7 @@
           return;
         }
         on_success = function() {
-          return this.store.deleteAction(id);
+          return _this.store.deleteAction(id);
         };
         if (type === this.ACTION_REGISTER_USER) {
           return this.api.registerUser(params, on_success);
