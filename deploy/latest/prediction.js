@@ -133,8 +133,8 @@
           return jQuery(e).attr('class').split(' ').filter(starts_with_category);
         };
         withCats = jQuery(item).map(to_cats_list);
-        cat = withCats.first();
-        if (cat && (match = /category(\d+)/.exec(cat.first()))) {
+        cat = withCats[0];
+        if (cat && (match = /category(\d+)/.exec(cat[0]))) {
           return match.last();
         }
         return 'default';

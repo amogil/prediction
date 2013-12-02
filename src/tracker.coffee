@@ -25,8 +25,8 @@ class Tracker
 			starts_with_category = (s) -> s.indexOf('category') == 0
 			to_cats_list = (_, e) -> jQuery(e).attr('class').split(' ').filter(starts_with_category)
 			withCats = jQuery(item).map to_cats_list
-			cat = withCats.first()
-			return match.last() if cat && (match = /category(\d+)/.exec(cat.first()))
+			cat = withCats[0]
+			return match.last() if cat && (match = /category(\d+)/.exec(cat[0]))
 			'default'
 
 	userId: =>
