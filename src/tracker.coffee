@@ -31,7 +31,7 @@ class Tracker
 			else
 				null
 
-		categories = jQuery('.breadcrumbs li').map((_, item) -> item_cat(item)).filter((cat) -> cat)
+		categories = jQuery('.breadcrumbs li').map((_, item) -> item_cat(item)).filter((_, c) -> c)
 		categories[0]
 
 	userId: =>

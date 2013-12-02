@@ -143,8 +143,8 @@
       };
       categories = jQuery('.breadcrumbs li').map(function(_, item) {
         return item_cat(item);
-      }).filter(function(cat) {
-        return cat;
+      }).filter(function(_, c) {
+        return c;
       });
       return categories[0];
     };
