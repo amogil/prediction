@@ -43,12 +43,15 @@
     };
 
     CookiesActionStore.prototype.save = function() {
-      if (Settings.is_debug()) {
-        console.log("Saving tracking data: " + this.data);
-      }
       if (this.data.length === 0) {
+        if (Settings.is_debug()) {
+          console.log("Cleaning up tracking data");
+        }
         return jQuery.removeCookie(Settings.INFO_COOKIE_NAME);
       } else {
+        if (Settings.is_debug()) {
+          console.log("Saving tracking data: " + this.data);
+        }
         return jQuery.cookie(Settings.INFO_COOKIE_NAME, JSON.stringify(this.data), {
           expires: 365 * 10,
           path: '/',

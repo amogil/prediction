@@ -15,10 +15,11 @@ class CookiesActionStore
 	current: => @data || @load()
 
 	save: =>
-		console.log("Saving tracking data: #{@data}") if Settings.is_debug()
 		if @data.length == 0
+			console.log("Cleaning up tracking data") if Settings.is_debug()
 			jQuery.removeCookie(Settings.INFO_COOKIE_NAME)
 		else
+			console.log("Saving tracking data: #{@data}") if Settings.is_debug()
 			jQuery.cookie(Settings.INFO_COOKIE_NAME, JSON.stringify(@data),
 				expires: 365 * 10, path: '/', domain: ".#{location.host}")
 
