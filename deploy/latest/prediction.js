@@ -114,15 +114,13 @@
     };
 
     Tracker.prototype.generateUserId = function() {
-      var alphabet, random_user_id;
+      var alphabet;
       alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      random_user_id = '';
-      [1, 2, 3, 4, 5, 6, 7, 8].map(function() {
+      return [1, 2, 3, 4, 5, 6, 7, 8].map(function() {
         return alphabet.charAt(Math.floor(Math.random() * alphabet.length));
       }).reduce(function(a, b) {
         return a + b;
       });
-      return random_user_id;
     };
 
     Tracker.prototype.currentCategory = function() {
