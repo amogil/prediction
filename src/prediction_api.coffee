@@ -1,5 +1,6 @@
 class PredictionAPI
   constructor: () ->
+    jQuery.support.cors = true
 
   registerUser: (userId) =>
     @request 'users.json', pio_uid: userId

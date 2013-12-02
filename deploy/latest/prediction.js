@@ -13,6 +13,7 @@
       this.registerUserItemAction = __bind(this.registerUserItemAction, this);
       this.registerItem = __bind(this.registerItem, this);
       this.registerUser = __bind(this.registerUser, this);
+      jQuery.support.cors = true;
     }
 
     PredictionAPI.prototype.registerUser = function(userId) {
