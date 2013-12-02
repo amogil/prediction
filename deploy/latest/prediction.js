@@ -33,7 +33,7 @@
     };
 
     CookiesActionStore.prototype.current = function() {
-      return this.data || load();
+      return this.data || this.load();
     };
 
     CookiesActionStore.prototype.save = function() {

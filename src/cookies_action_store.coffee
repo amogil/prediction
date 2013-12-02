@@ -8,7 +8,7 @@ class CookiesActionStore
 			[]
 		@data
 
-	current: => @data || load()
+	current: => @data || @load()
 
 	save: =>
 		console.log("Saving tracking data: #{@data}") if Settings.is_debug()
