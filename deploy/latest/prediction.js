@@ -135,7 +135,7 @@
         };
         withCats = jQuery(item).map(to_cats_list);
         cat = withCats[0];
-        if (cat && (match = /category(\d+)/.exec(cat[0]))) {
+        if (cat && (match = /category(\d+)/.exec(cat))) {
           return match[match.length - 1];
         } else {
           return null;
