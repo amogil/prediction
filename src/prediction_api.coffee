@@ -1,7 +1,5 @@
 class PredictionAPI
-  constructor: (url, apiKey) ->
-    @url = url
-    @apiKey = apiKey
+  constructor: () ->
 
   registerUser: (userId) =>
     @request 'users.json', pio_uid: userId
@@ -13,14 +11,14 @@ class PredictionAPI
     @request 'actions/u2i.json', pio_uid: userId, pio_iid: itemId, pio_action: action
 
   request: (path, data) =>
-    url = "#{@url}/#{path}"
+    url = "#{Settings.API_URL}/#{path}"
     console.log("Posting #{JSON.stringify(data)} to #{url}") if Settings.is_debug()
     jQuery.ajax
       url: url
       crossDomain: true
       type: 'POST'
       contentType: 'application/json'
-      data: JSON.stringify(jQuery.extend({pio_appkey: @apiKey}, data))
+      data: JSON.stringify(jQuery.extend({pio_appkey: Settings.API_KEY}, data))
       success: () =>
         console.log('Success!') if Settings.is_debug()
       error: (_xhr, _textStatus, error) =>

@@ -1,6 +1,6 @@
 class Tracker
   constructor: ->
-    @api = new PredictionAPI Settings.API_URL, Settings.API_KEY
+    @api = new PredictionAPI()
     jQuery('.product-view form').each (_, f) =>
       form = jQuery(f)
       item_id = form.find("input[name='product']").val()

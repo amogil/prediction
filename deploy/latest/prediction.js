@@ -8,13 +8,11 @@
   });
 
   PredictionAPI = (function() {
-    function PredictionAPI(url, apiKey) {
+    function PredictionAPI() {
       this.request = __bind(this.request, this);
       this.registerUserItemAction = __bind(this.registerUserItemAction, this);
       this.registerItem = __bind(this.registerItem, this);
       this.registerUser = __bind(this.registerUser, this);
-      this.url = url;
-      this.apiKey = apiKey;
     }
 
     PredictionAPI.prototype.registerUser = function(userId) {
@@ -44,7 +42,7 @@
     PredictionAPI.prototype.request = function(path, data) {
       var url,
         _this = this;
-      url = "" + this.url + "/" + path;
+      url = "" + Settings.API_URL + "/" + path;
       if (Settings.is_debug()) {
         console.log("Posting " + (JSON.stringify(data)) + " to " + url);
       }
@@ -54,7 +52,7 @@
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(jQuery.extend({
-          pio_appkey: this.apiKey
+          pio_appkey: Settings.API_KEY
         }, data)),
         success: function() {
           if (Settings.is_debug()) {
@@ -97,7 +95,7 @@
       this.userId = __bind(this.userId, this);
       this.generateUserId = __bind(this.generateUserId, this);
       var _this = this;
-      this.api = new PredictionAPI(Settings.API_URL, Settings.API_KEY);
+      this.api = new PredictionAPI();
       jQuery('.product-view form').each(function(_, f) {
         var form, item_id;
         form = jQuery(f);
