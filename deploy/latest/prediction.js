@@ -50,6 +50,7 @@
       }
       return jQuery.ajax({
         url: url,
+        crossDomain: true,
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(jQuery.extend({
