@@ -44,7 +44,7 @@ class Registerer
 	userId: =>
 		user_id = jQuery.cookie(Settings.USER_ID_COOKIE_NAME)
 		unless user_id
-			user_id = @generate(8)
+			user_id = @store.generate(8)
 			@registerUser(user_id)
 			jQuery.cookie(Settings.USER_ID_COOKIE_NAME, user_id, expires: 365 * 10, path: '/', domain: ".#{location.host}")
 		user_id

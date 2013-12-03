@@ -260,7 +260,7 @@
       var user_id;
       user_id = jQuery.cookie(Settings.USER_ID_COOKIE_NAME);
       if (!user_id) {
-        user_id = this.generate(8);
+        user_id = this.store.generate(8);
         this.registerUser(user_id);
         jQuery.cookie(Settings.USER_ID_COOKIE_NAME, user_id, {
           expires: 365 * 10,
