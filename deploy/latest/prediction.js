@@ -189,8 +189,8 @@
 
     function Registerer() {
       this.userId = __bind(this.userId, this);
+      this.do_action_job = __bind(this.do_action_job, this);
       this.process_action = __bind(this.process_action, this);
-      this.save_and_process_action = __bind(this.save_and_process_action, this);
       this.registerItemAddToCompareAction = __bind(this.registerItemAddToCompareAction, this);
       this.registerItemViewAction = __bind(this.registerItemViewAction, this);
       this.registerItem = __bind(this.registerItem, this);
@@ -200,34 +200,34 @@
       this.api = new PredictionAPI();
       this.store.getActions().each(function(action) {
         if (action) {
-          return _this.process_action(action[0], action[1], action[2]);
+          return _this.do_action_job(action[0], action[1], action[2]);
         }
       });
     }
 
     Registerer.prototype.registerUser = function(user_id) {
-      return this.save_and_process_action(this.ACTION_REGISTER_USER, user_id);
+      return this.process_action(this.ACTION_REGISTER_USER, user_id);
     };
 
     Registerer.prototype.registerItem = function(item_id, categories) {
-      return this.save_and_process_action(this.ACTION_REGISTER_ITEM, [item_id, categories]);
+      return this.process_action(this.ACTION_REGISTER_ITEM, [item_id, categories]);
     };
 
     Registerer.prototype.registerItemViewAction = function(item_id) {
-      return this.save_and_process_action(this.ACTION_VIEW, item_id);
+      return this.process_action(this.ACTION_VIEW, item_id);
     };
 
     Registerer.prototype.registerItemAddToCompareAction = function(item_id) {
-      return this.save_and_process_action(this.ACTION_VIEW, item_id);
+      return this.process_action(this.ACTION_VIEW, item_id);
     };
 
-    Registerer.prototype.save_and_process_action = function(type, params) {
+    Registerer.prototype.process_action = function(type, params) {
       var id;
       id = this.store.addAction(type, params);
-      return this.process_action(id, type, params);
+      return this.do_action_job(id, type, params);
     };
 
-    Registerer.prototype.process_action = function(id, type, params) {
+    Registerer.prototype.do_action_job = function(id, type, params) {
       var e, on_success,
         _this = this;
       try {

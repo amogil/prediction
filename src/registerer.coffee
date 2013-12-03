@@ -7,25 +7,25 @@ class Registerer
 		@store = new CookiesActionStore()
 		@api = new PredictionAPI()
 		@store.getActions().each (action) =>
-			@process_action(action[0], action[1], action[2]) if action
+			@do_action_job(action[0], action[1], action[2]) if action
 
 	registerUser: (user_id) =>
-		@save_and_process_action(@ACTION_REGISTER_USER, user_id)
+		@process_action(@ACTION_REGISTER_USER, user_id)
 
 	registerItem: (item_id, categories) =>
-		@save_and_process_action(@ACTION_REGISTER_ITEM, [item_id, categories])
+		@process_action(@ACTION_REGISTER_ITEM, [item_id, categories])
 
 	registerItemViewAction: (item_id) =>
-		@save_and_process_action(@ACTION_VIEW, item_id)
+		@process_action(@ACTION_VIEW, item_id)
 
 	registerItemAddToCompareAction: (item_id) =>
-		@save_and_process_action(@ACTION_VIEW, item_id)
+		@process_action(@ACTION_VIEW, item_id)
 
-	save_and_process_action: (type, params) =>
+	process_action: (type, params) =>
 		id = @store.addAction(type, params)
-		@process_action(id, type, params)
+		@do_action_job(id, type, params)
 
-	process_action: (id, type, params) =>
+	do_action_job: (id, type, params) =>
 		try
 			if !id || !type || !params
 				console.log("Warning while processing action. Bad params: #{id}, #{type}, #{params}") if Settings.is_debug()
