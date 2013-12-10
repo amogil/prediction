@@ -3,13 +3,20 @@ class Tracker
 		@reg = new Registerer()
 		@trackProductView()
 		@subscribeCompareLinks()
-		@subscribeAddToCart()
 
-	subscribeAddToCart: =>
 		@subscribeAddToCartAtWishList()
 		@subscribeAddToCartAtProductView()
 		@subscribeAddToCartAtCategoryView()
 		@subscribeAddToCartAtCompareView()
+
+		@subscribeAddToWishlistAtProductView()
+
+	subscribeAddToWishlistAtProductView: =>
+		jQuery('.product-view .link-wishlist').click (e) =>
+			item = jQuery(e.target)
+			if (match = /\/wishlist\/index\/add\/product\/(\d+)\//.exec item.attr('onclick'))
+				item_id = match[match.length - 1]
+				@reg.registerItemAddToWishlistAction item_id
 
 	subscribeAddToCartAtCompareView: =>
 		jQuery('.compare-table .btn-cart').click (e) =>

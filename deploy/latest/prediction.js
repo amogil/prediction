@@ -189,11 +189,14 @@
 
     Registerer.prototype.ACTION_REGISTER_CONVERSION = 4;
 
+    Registerer.prototype.ACTION_REGISTER_LIKE = 5;
+
     function Registerer() {
       this.userId = __bind(this.userId, this);
       this.do_action_job = __bind(this.do_action_job, this);
       this.process_action = __bind(this.process_action, this);
       this.registerItemAddToCompareAction = __bind(this.registerItemAddToCompareAction, this);
+      this.registerItemAddToWishlistAction = __bind(this.registerItemAddToWishlistAction, this);
       this.registerItemViewAction = __bind(this.registerItemViewAction, this);
       this.registerItem = __bind(this.registerItem, this);
       this.registerItemAddToCart = __bind(this.registerItemAddToCart, this);
@@ -222,6 +225,10 @@
 
     Registerer.prototype.registerItemViewAction = function(item_id) {
       return this.process_action(this.ACTION_VIEW, item_id);
+    };
+
+    Registerer.prototype.registerItemAddToWishlistAction = function(item_id) {
+      return this.process_action(this.ACTION_REGISTER_LIKE, item_id);
     };
 
     Registerer.prototype.registerItemAddToCompareAction = function(item_id) {
@@ -255,6 +262,8 @@
           return this.api.registerItem(params[0], params[1], on_success);
         } else if (type === this.ACTION_REGISTER_CONVERSION) {
           return this.api.registerUserItemAction(this.userId(), params, 'conversion', on_success);
+        } else if (type === this.ACTION_REGISTER_LIKE) {
+          return this.api.registerUserItemAction(this.userId(), params, 'like', on_success);
         }
       } catch (_error) {
         e = _error;
@@ -314,18 +323,27 @@
       this.subscribeAddToCartAtWishList = __bind(this.subscribeAddToCartAtWishList, this);
       this.subscribeAddToCartAtCategoryView = __bind(this.subscribeAddToCartAtCategoryView, this);
       this.subscribeAddToCartAtCompareView = __bind(this.subscribeAddToCartAtCompareView, this);
-      this.subscribeAddToCart = __bind(this.subscribeAddToCart, this);
+      this.subscribeAddToWishlistAtProductView = __bind(this.subscribeAddToWishlistAtProductView, this);
       this.reg = new Registerer();
       this.trackProductView();
       this.subscribeCompareLinks();
-      this.subscribeAddToCart();
-    }
-
-    Tracker.prototype.subscribeAddToCart = function() {
       this.subscribeAddToCartAtWishList();
       this.subscribeAddToCartAtProductView();
       this.subscribeAddToCartAtCategoryView();
-      return this.subscribeAddToCartAtCompareView();
+      this.subscribeAddToCartAtCompareView();
+      this.subscribeAddToWishlistAtProductView();
+    }
+
+    Tracker.prototype.subscribeAddToWishlistAtProductView = function() {
+      var _this = this;
+      return jQuery('.product-view .link-wishlist').click(function(e) {
+        var item, item_id, match;
+        item = jQuery(e.target);
+        if ((match = /\/wishlist\/index\/add\/product\/(\d+)\//.exec(item.attr('onclick')))) {
+          item_id = match[match.length - 1];
+          return _this.reg.registerItemAddToWishlistAction(item_id);
+        }
+      });
     };
 
     Tracker.prototype.subscribeAddToCartAtCompareView = function() {
