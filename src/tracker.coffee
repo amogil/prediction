@@ -11,6 +11,14 @@ class Tracker
 
 		@subscribeAddToWishlistAtProductView()
 		@subscribeAddToWishlistAtCategoryView()
+		@subscribeAddToWishlistAtCompareView()
+
+	subscribeAddToWishlistAtCompareView: =>
+		jQuery('.compare-table .link-wishlist').click (e) =>
+			item = jQuery(e.target)
+			if (match = /\/wishlist\.+\/product\/(\d+)\//.exec item.attr('onclick'))
+				item_id = match[match.length - 1]
+				@reg.registerItemAddToWishlistAction item_id
 
 	subscribeAddToWishlistAtCategoryView: =>
 		jQuery('.category-products .link-wishlist').click (e) =>
