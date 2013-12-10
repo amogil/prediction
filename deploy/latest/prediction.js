@@ -336,13 +336,21 @@
           return _this.reg.registerItemAddToCart(item_id);
         });
       });
-      return jQuery('.product-view form').each(function(_, f) {
+      jQuery('.product-view form').each(function(_, f) {
         var form, item_id;
         form = jQuery(f);
         item_id = form.find("input[name='product']").val();
         return jQuery('.btn-cart', form).click(function() {
           return _this.reg.registerItemAddToCart(item_id);
         });
+      });
+      return jQuery('.category-products .btn-cart').click(function(e) {
+        var item, item_id, match;
+        item = jQuery(e.target);
+        if ((match = /\/checkout\/.+\/product\/\d+\//.exec(item.attr('onclick')))) {
+          item_id = match[match.length - 1];
+          return _this.reg.registerItemAddToCart(item_id);
+        }
       });
     };
 

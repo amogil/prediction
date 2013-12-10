@@ -27,6 +27,13 @@ class Tracker
 			jQuery('.btn-cart', form).click =>
 				@reg.registerItemAddToCart item_id
 
+		# Список продуктов в категории
+		jQuery('.category-products .btn-cart').click (e) =>
+			item = jQuery(e.target)
+			if (match = /\/checkout\/.+\/product\/\d+\//.exec item.attr('onclick'))
+				item_id = match[match.length - 1]
+				@reg.registerItemAddToCart item_id
+
 	subscribeCompare: =>
 		jQuery('.link-compare').click (e) =>
 			item = jQuery(e.target)
