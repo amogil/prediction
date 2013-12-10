@@ -16,7 +16,7 @@ class Tracker
 	subscribeAddToWishlistAtCompareView: =>
 		jQuery('.compare-table .link-wishlist').click (e) =>
 			item = jQuery(e.target)
-			if (match = /\/wishlist\.+\/product\/(\d+)\//.exec item.attr('onclick'))
+			if (match = /\/wishlist\.+\/product\/(\d+)\//.exec item.attr('href'))
 				item_id = match[match.length - 1]
 				@reg.registerItemAddToWishlistAction item_id
 

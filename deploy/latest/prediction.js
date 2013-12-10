@@ -343,7 +343,7 @@
       return jQuery('.compare-table .link-wishlist').click(function(e) {
         var item, item_id, match;
         item = jQuery(e.target);
-        if ((match = /\/wishlist\.+\/product\/(\d+)\//.exec(item.attr('onclick')))) {
+        if ((match = /\/wishlist\.+\/product\/(\d+)\//.exec(item.attr('href')))) {
           item_id = match[match.length - 1];
           return _this.reg.registerItemAddToWishlistAction(item_id);
         }
