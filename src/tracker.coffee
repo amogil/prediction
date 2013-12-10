@@ -10,15 +10,22 @@ class Tracker
 
 		# Добавить все в корзину
 		jQuery('.my-wishlist .btn-add').click =>
-			get_product_id = (e) -> jQuery(e).attr('id').gsub(/^product-price-/, '')
-			jQuery('.my-wishlist [id^="product-price-"]').map(get_product_id).each (product_id) =>
-				@reg.registerItemAddToCart product_id
+			get_item_id = (e) -> jQuery(e).attr('id').gsub(/^product-price-/, '')
+			jQuery('.my-wishlist [id^="product-price-"]').map(get_item_id).each (item_id) =>
+				@reg.registerItemAddToCart item_id
 
 		# Добавить в корзину
 		jQuery('.my-wishlist .cart-cell').each (_, e) =>
 			cell = jQuery(e)
-			product_id = jQuery('[id^="product-price-"]', cell).attr('id').gsub(/^product-price-/, '')
-			jQuery('.btn-cart', cell).click => @reg.registerItemAddToCart product_id
+			item_id = jQuery('[id^="product-price-"]', cell).attr('id').gsub(/^product-price-/, '')
+			jQuery('.btn-cart', cell).click => @reg.registerItemAddToCart item_id
+
+		# Карточка продукта
+		jQuery('.product-view form').each (_, f) =>
+			form = jQuery(f)
+			item_id = form.find("input[name='product']").val()
+			jQuery('.btn-cart', form).click =>
+				@reg.registerItemAddToCart item_id
 
 	subscribeCompare: =>
 		jQuery('.link-compare').click (e) =>

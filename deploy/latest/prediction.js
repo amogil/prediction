@@ -320,20 +320,28 @@
     Tracker.prototype.subscribeAddToCard = function() {
       var _this = this;
       jQuery('.my-wishlist .btn-add').click(function() {
-        var get_product_id;
-        get_product_id = function(e) {
+        var get_item_id;
+        get_item_id = function(e) {
           return jQuery(e).attr('id').gsub(/^product-price-/, '');
         };
-        return jQuery('.my-wishlist [id^="product-price-"]').map(get_product_id).each(function(product_id) {
-          return _this.reg.registerItemAddToCart(product_id);
+        return jQuery('.my-wishlist [id^="product-price-"]').map(get_item_id).each(function(item_id) {
+          return _this.reg.registerItemAddToCart(item_id);
         });
       });
-      return jQuery('.my-wishlist .cart-cell').each(function(_, e) {
-        var cell, product_id;
+      jQuery('.my-wishlist .cart-cell').each(function(_, e) {
+        var cell, item_id;
         cell = jQuery(e);
-        product_id = jQuery('[id^="product-price-"]', cell).attr('id').gsub(/^product-price-/, '');
+        item_id = jQuery('[id^="product-price-"]', cell).attr('id').gsub(/^product-price-/, '');
         return jQuery('.btn-cart', cell).click(function() {
-          return _this.reg.registerItemAddToCart(product_id);
+          return _this.reg.registerItemAddToCart(item_id);
+        });
+      });
+      return jQuery('.product-view form').each(function(_, f) {
+        var form, item_id;
+        form = jQuery(f);
+        item_id = form.find("input[name='product']").val();
+        return jQuery('.btn-cart', form).click(function() {
+          return _this.reg.registerItemAddToCart(item_id);
         });
       });
     };
