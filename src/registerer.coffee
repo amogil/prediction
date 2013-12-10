@@ -2,6 +2,7 @@ class Registerer
 	ACTION_REGISTER_ITEM: 1
 	ACTION_VIEW: 2
 	ACTION_REGISTER_USER: 3
+	ACTION_REGISTER_CONVERSION: 4
 
 	constructor: ->
 		@store = new CookiesActionStore()
@@ -11,6 +12,9 @@ class Registerer
 
 	registerUser: (user_id) =>
 		@process_action(@ACTION_REGISTER_USER, user_id)
+
+	registerItemAddToCart: (item_id) =>
+		@process_action(@ACTION_REGISTER_CONVERSION, item_id)
 
 	registerItem: (item_id, categories) =>
 		@process_action(@ACTION_REGISTER_ITEM, [item_id, categories])
@@ -37,6 +41,8 @@ class Registerer
 				@api.registerUserItemAction(@userId(), params, 'view', on_success)
 			else if type == @ACTION_REGISTER_ITEM
 				@api.registerItem(params[0], params[1], on_success)
+			else if type == @ACTION_REGISTER_CONVERSION
+				@api.registerUserItemAction(@userId(), params, 'conversion', on_success)
 		catch e
 			console.log("Error while processing action: #{e}") if Settings.is_debug()
 			@store.deleteAction(id)

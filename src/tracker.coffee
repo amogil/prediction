@@ -3,27 +3,33 @@ class Tracker
 		@reg = new Registerer()
 		@trackProductView()
 		@subscribeCompare()
+		@subscribeAddToCard()
 
-	subscribeCompare: () =>
+	subscribeAddToCard: =>
+		# Список пожеланий
+		jQuery('.my-wishlist .cart-cell').each (_, e) =>
+			cell = jQuery(e)
+			product_id = jQuery('[id^="product-price-"]', cell).attr('id').gsub(/^product-price-/, '')
+			jQuery('.btn-cart', cell).click => @reg.registerItemAddToCart product_id
+
+	subscribeCompare: =>
 		jQuery('.link-compare').click (e) =>
 			item = jQuery(e.target)
 			if (match = /\/product_compare\/add\/product\/(\d+)\//.exec item.attr('onclick'))
 				item_id = match[match.length - 1]
 				@reg.registerItemAddToCompareAction item_id
 
-	trackProductView: () =>
+	trackProductView: =>
 		jQuery('.product-view form').each (_, f) =>
 			form = jQuery(f)
 			item_id = form.find("input[name='product']").val()
 			@reg.registerItem item_id, [@currentCategory()]
 			@reg.registerItemViewAction item_id
 
-#      form.find('.add-to-cart button').click () =>
-#        @reg.registerUserItemAction @userId(), item_id, 'conversion'
 #      form.find('.link-wishlist').click () =>
 #        @reg.registerUserItemAction @userId(), item_id, 'like'
 
-	currentCategory: () =>
+	currentCategory: =>
 		item_cat = (item) ->
 			starts_with_category = (s) -> s.indexOf('category') == 0
 			to_cats_list = (_, e) -> jQuery(e).attr('class').split(' ').filter(starts_with_category)
