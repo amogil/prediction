@@ -313,6 +313,7 @@
       this.subscribeProductView = __bind(this.subscribeProductView, this);
       this.subscribeWishList = __bind(this.subscribeWishList, this);
       this.subscribeCategoryView = __bind(this.subscribeCategoryView, this);
+      this.subscribeCompareView = __bind(this.subscribeCompareView, this);
       this.subscribeAddToCard = __bind(this.subscribeAddToCard, this);
       this.reg = new Registerer();
       this.trackProductView();
@@ -323,7 +324,21 @@
     Tracker.prototype.subscribeAddToCard = function() {
       this.subscribeWishList();
       this.subscribeProductView();
-      return this.subscribeCategoryView();
+      this.subscribeCategoryView();
+      return this.subscribeCompareView();
+    };
+
+    Tracker.prototype.subscribeCompareView = function() {
+      var _this = this;
+      return jQuery('.compare-table .btn-cart').click(function(e) {
+        var item, item_id, match;
+        item = jQuery(e.target);
+        item = item.parent().parent();
+        if ((match = /\/product_compare\/add\/product\/(\d+)\//.exec(item.attr('onclick')))) {
+          item_id = match[match.length - 1];
+          return _this.reg.registerItemAddToCart(item_id);
+        }
+      });
     };
 
     Tracker.prototype.subscribeCategoryView = function() {
