@@ -15,7 +15,7 @@ class Tracker
 		jQuery('.compare-table .btn-cart').click (e) =>
 			item = jQuery(e.target)
 			item = item.parent().parent()
-			if (match = /\/product_compare\/add\/product\/(\d+)\//.exec item.attr('onclick'))
+			if (match = /\/checkout\/.+\/product\/(\d+)\//.exec item.attr('onclick'))
 				item_id = match[match.length - 1]
 				@reg.registerItemAddToCart item_id
 
