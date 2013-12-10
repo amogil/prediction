@@ -310,25 +310,25 @@
       this.currentCategory = __bind(this.currentCategory, this);
       this.trackProductView = __bind(this.trackProductView, this);
       this.subscribeCompareLinks = __bind(this.subscribeCompareLinks, this);
-      this.subscribeProductView = __bind(this.subscribeProductView, this);
-      this.subscribeWishList = __bind(this.subscribeWishList, this);
-      this.subscribeCategoryView = __bind(this.subscribeCategoryView, this);
-      this.subscribeCompareView = __bind(this.subscribeCompareView, this);
-      this.subscribeAddToCard = __bind(this.subscribeAddToCard, this);
+      this.subscribeAddToCartAtProductView = __bind(this.subscribeAddToCartAtProductView, this);
+      this.subscribeAddToCartAtWishList = __bind(this.subscribeAddToCartAtWishList, this);
+      this.subscribeAddToCartAtCategoryView = __bind(this.subscribeAddToCartAtCategoryView, this);
+      this.subscribeAddToCartAtCompareView = __bind(this.subscribeAddToCartAtCompareView, this);
+      this.subscribeAddToCart = __bind(this.subscribeAddToCart, this);
       this.reg = new Registerer();
       this.trackProductView();
       this.subscribeCompareLinks();
-      this.subscribeAddToCard();
+      this.subscribeAddToCart();
     }
 
-    Tracker.prototype.subscribeAddToCard = function() {
-      this.subscribeWishList();
-      this.subscribeProductView();
-      this.subscribeCategoryView();
-      return this.subscribeCompareView();
+    Tracker.prototype.subscribeAddToCart = function() {
+      this.subscribeAddToCartAtWishList();
+      this.subscribeAddToCartAtProductView();
+      this.subscribeAddToCartAtCategoryView();
+      return this.subscribeAddToCartAtCompareView();
     };
 
-    Tracker.prototype.subscribeCompareView = function() {
+    Tracker.prototype.subscribeAddToCartAtCompareView = function() {
       var _this = this;
       return jQuery('.compare-table .btn-cart').click(function(e) {
         var item, item_id, match;
@@ -341,7 +341,7 @@
       });
     };
 
-    Tracker.prototype.subscribeCategoryView = function() {
+    Tracker.prototype.subscribeAddToCartAtCategoryView = function() {
       var _this = this;
       return jQuery('.category-products .btn-cart').click(function(e) {
         var item, item_id, match;
@@ -354,11 +354,11 @@
       });
     };
 
-    Tracker.prototype.subscribeWishList = function() {
+    Tracker.prototype.subscribeAddToCartAtWishList = function() {
       var _this = this;
       jQuery('.my-wishlist .btn-add').click(function() {
         var get_item_id;
-        get_item_id = function(e) {
+        get_item_id = function(_, e) {
           return jQuery(e).attr('id').gsub(/^product-price-/, '');
         };
         return jQuery('.my-wishlist [id^="product-price-"]').map(get_item_id).each(function(item_id) {
@@ -375,7 +375,7 @@
       });
     };
 
-    Tracker.prototype.subscribeProductView = function() {
+    Tracker.prototype.subscribeAddToCartAtProductView = function() {
       var _this = this;
       return jQuery('.product-view form').each(function(_, f) {
         var form, item_id;

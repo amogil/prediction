@@ -3,15 +3,15 @@ class Tracker
 		@reg = new Registerer()
 		@trackProductView()
 		@subscribeCompareLinks()
-		@subscribeAddToCard()
+		@subscribeAddToCart()
 
-	subscribeAddToCard: =>
-		@subscribeWishList()
-		@subscribeProductView()
-		@subscribeCategoryView()
-		@subscribeCompareView()
+	subscribeAddToCart: =>
+		@subscribeAddToCartAtWishList()
+		@subscribeAddToCartAtProductView()
+		@subscribeAddToCartAtCategoryView()
+		@subscribeAddToCartAtCompareView()
 
-	subscribeCompareView: =>
+	subscribeAddToCartAtCompareView: =>
 		jQuery('.compare-table .btn-cart').click (e) =>
 			item = jQuery(e.target)
 			item = item.parent().parent()
@@ -19,7 +19,7 @@ class Tracker
 				item_id = match[match.length - 1]
 				@reg.registerItemAddToCart item_id
 
-	subscribeCategoryView: =>
+	subscribeAddToCartAtCategoryView: =>
 		jQuery('.category-products .btn-cart').click (e) =>
 			item = jQuery(e.target)
 			item = item.parent().parent()
@@ -27,10 +27,10 @@ class Tracker
 				item_id = match[match.length - 1]
 				@reg.registerItemAddToCart item_id
 
-	subscribeWishList: =>
+	subscribeAddToCartAtWishList: =>
 		# Добавить все в корзину
 		jQuery('.my-wishlist .btn-add').click =>
-			get_item_id = (e) -> jQuery(e).attr('id').gsub(/^product-price-/, '')
+			get_item_id = (_, e) -> jQuery(e).attr('id').gsub(/^product-price-/, '')
 			jQuery('.my-wishlist [id^="product-price-"]').map(get_item_id).each (item_id) =>
 				@reg.registerItemAddToCart item_id
 
@@ -40,7 +40,7 @@ class Tracker
 			item_id = jQuery('[id^="product-price-"]', cell).attr('id').gsub(/^product-price-/, '')
 			jQuery('.btn-cart', cell).click => @reg.registerItemAddToCart item_id
 
-	subscribeProductView: =>
+	subscribeAddToCartAtProductView: =>
 		jQuery('.product-view form').each (_, f) =>
 			form = jQuery(f)
 			item_id = form.find("input[name='product']").val()
