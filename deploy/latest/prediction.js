@@ -187,6 +187,8 @@
 
     Registerer.prototype.ACTION_REGISTER_USER = 3;
 
+    Registerer.prototype.ACTION_REGISTER_CONVERSION = 4;
+
     function Registerer() {
       this.userId = __bind(this.userId, this);
       this.do_action_job = __bind(this.do_action_job, this);
@@ -194,6 +196,7 @@
       this.registerItemAddToCompareAction = __bind(this.registerItemAddToCompareAction, this);
       this.registerItemViewAction = __bind(this.registerItemViewAction, this);
       this.registerItem = __bind(this.registerItem, this);
+      this.registerItemAddToCart = __bind(this.registerItemAddToCart, this);
       this.registerUser = __bind(this.registerUser, this);
       var _this = this;
       this.store = new CookiesActionStore();
@@ -207,6 +210,10 @@
 
     Registerer.prototype.registerUser = function(user_id) {
       return this.process_action(this.ACTION_REGISTER_USER, user_id);
+    };
+
+    Registerer.prototype.registerItemAddToCart = function(item_id) {
+      return this.process_action(this.ACTION_REGISTER_CONVERSION, item_id);
     };
 
     Registerer.prototype.registerItem = function(item_id, categories) {
@@ -246,6 +253,8 @@
           return this.api.registerUserItemAction(this.userId(), params, 'view', on_success);
         } else if (type === this.ACTION_REGISTER_ITEM) {
           return this.api.registerItem(params[0], params[1], on_success);
+        } else if (type === this.ACTION_REGISTER_CONVERSION) {
+          return this.api.registerUserItemAction(this.userId(), params, 'conversion', on_success);
         }
       } catch (_error) {
         e = _error;
@@ -301,10 +310,24 @@
       this.currentCategory = __bind(this.currentCategory, this);
       this.trackProductView = __bind(this.trackProductView, this);
       this.subscribeCompare = __bind(this.subscribeCompare, this);
+      this.subscribeAddToCard = __bind(this.subscribeAddToCard, this);
       this.reg = new Registerer();
       this.trackProductView();
       this.subscribeCompare();
+      this.subscribeAddToCard();
     }
+
+    Tracker.prototype.subscribeAddToCard = function() {
+      var _this = this;
+      return jQuery('.my-wishlist .cart-cell').each(function(_, e) {
+        var cell, product_id;
+        cell = jQuery(e);
+        product_id = jQuery('[id^="product-price-"]', cell).attr('id').gsub(/^product-price-/, '');
+        return jQuery('.btn-cart', cell).click(function() {
+          return _this.reg.registerItemAddToCart(product_id);
+        });
+      });
+    };
 
     Tracker.prototype.subscribeCompare = function() {
       var _this = this;
