@@ -347,7 +347,7 @@
       return jQuery('.category-products .btn-cart').click(function(e) {
         var item, item_id, match;
         item = jQuery(e.target);
-        item = item.parent();
+        item = item.parent().parent();
         if ((match = /\/checkout\/.+\/product\/\d+\//.exec(item.attr('onclick')))) {
           item_id = match[match.length - 1];
           return _this.reg.registerItemAddToCart(item_id);

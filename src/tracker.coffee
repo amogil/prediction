@@ -30,7 +30,7 @@ class Tracker
 		# Список продуктов в категории
 		jQuery('.category-products .btn-cart').click (e) =>
 			item = jQuery(e.target)
-			item = item.parent()
+			item = item.parent().parent()
 			if (match = /\/checkout\/.+\/product\/\d+\//.exec item.attr('onclick'))
 				item_id = match[match.length - 1]
 				@reg.registerItemAddToCart item_id
