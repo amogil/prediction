@@ -31,7 +31,7 @@ class Tracker
 		# Добавить все в корзину
 		jQuery('.my-wishlist .btn-add').click =>
 			get_item_id = (_, e) -> jQuery(e).attr('id').gsub(/^product-price-/, '')
-			jQuery('.my-wishlist [id^="product-price-"]').map(get_item_id).each (item_id) =>
+			jQuery('.my-wishlist [id^="product-price-"]').map(get_item_id).each (_, item_id) =>
 				@reg.registerItemAddToCart item_id
 
 		# Добавить в корзину

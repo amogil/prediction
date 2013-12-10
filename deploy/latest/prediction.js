@@ -361,7 +361,7 @@
         get_item_id = function(_, e) {
           return jQuery(e).attr('id').gsub(/^product-price-/, '');
         };
-        return jQuery('.my-wishlist [id^="product-price-"]').map(get_item_id).each(function(item_id) {
+        return jQuery('.my-wishlist [id^="product-price-"]').map(get_item_id).each(function(_, item_id) {
           return _this.reg.registerItemAddToCart(item_id);
         });
       });
