@@ -2,7 +2,7 @@ class Tracker
 	constructor: ->
 		@reg = new Registerer()
 		@trackProductView()
-		@subscribeCompare()
+		@subscribeCompareLinks()
 		@subscribeAddToCard()
 
 	subscribeAddToCard: =>
@@ -47,7 +47,7 @@ class Tracker
 			jQuery('.btn-cart', form).click =>
 				@reg.registerItemAddToCart item_id
 
-	subscribeCompare: =>
+	subscribeCompareLinks: =>
 		jQuery('.link-compare').click (e) =>
 			item = jQuery(e.target)
 			if (match = /\/product_compare\/add\/product\/(\d+)\//.exec item.attr('onclick'))

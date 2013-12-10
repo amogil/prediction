@@ -309,7 +309,7 @@
     function Tracker() {
       this.currentCategory = __bind(this.currentCategory, this);
       this.trackProductView = __bind(this.trackProductView, this);
-      this.subscribeCompare = __bind(this.subscribeCompare, this);
+      this.subscribeCompareLinks = __bind(this.subscribeCompareLinks, this);
       this.subscribeProductView = __bind(this.subscribeProductView, this);
       this.subscribeWishList = __bind(this.subscribeWishList, this);
       this.subscribeCategoryView = __bind(this.subscribeCategoryView, this);
@@ -317,7 +317,7 @@
       this.subscribeAddToCard = __bind(this.subscribeAddToCard, this);
       this.reg = new Registerer();
       this.trackProductView();
-      this.subscribeCompare();
+      this.subscribeCompareLinks();
       this.subscribeAddToCard();
     }
 
@@ -387,7 +387,7 @@
       });
     };
 
-    Tracker.prototype.subscribeCompare = function() {
+    Tracker.prototype.subscribeCompareLinks = function() {
       var _this = this;
       return jQuery('.link-compare').click(function(e) {
         var item, item_id, match;
