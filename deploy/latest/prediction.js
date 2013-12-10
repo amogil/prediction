@@ -324,6 +324,7 @@
       this.subscribeAddToCartAtCategoryView = __bind(this.subscribeAddToCartAtCategoryView, this);
       this.subscribeAddToCartAtCompareView = __bind(this.subscribeAddToCartAtCompareView, this);
       this.subscribeAddToWishlistAtProductView = __bind(this.subscribeAddToWishlistAtProductView, this);
+      this.subscribeAddToWishlistAtCategoryView = __bind(this.subscribeAddToWishlistAtCategoryView, this);
       this.reg = new Registerer();
       this.trackProductView();
       this.subscribeCompareLinks();
@@ -332,7 +333,20 @@
       this.subscribeAddToCartAtCategoryView();
       this.subscribeAddToCartAtCompareView();
       this.subscribeAddToWishlistAtProductView();
+      this.subscribeAddToWishlistAtCategoryView();
     }
+
+    Tracker.prototype.subscribeAddToWishlistAtCategoryView = function() {
+      var _this = this;
+      return jQuery('.category-products .link-wishlist').click(function(e) {
+        var item, item_id, match;
+        item = jQuery(e.target);
+        if ((match = /\/wishlist\/index\/add\/product\/(\d+)\//.exec(item.attr('onclick')))) {
+          item_id = match[match.length - 1];
+          return _this.reg.registerItemAddToWishlistAction(item_id);
+        }
+      });
+    };
 
     Tracker.prototype.subscribeAddToWishlistAtProductView = function() {
       var _this = this;
