@@ -310,6 +310,9 @@
       this.currentCategory = __bind(this.currentCategory, this);
       this.trackProductView = __bind(this.trackProductView, this);
       this.subscribeCompare = __bind(this.subscribeCompare, this);
+      this.subscribeProductView = __bind(this.subscribeProductView, this);
+      this.subscribeWishList = __bind(this.subscribeWishList, this);
+      this.subscribeCategoryView = __bind(this.subscribeCategoryView, this);
       this.subscribeAddToCard = __bind(this.subscribeAddToCard, this);
       this.reg = new Registerer();
       this.trackProductView();
@@ -318,6 +321,25 @@
     }
 
     Tracker.prototype.subscribeAddToCard = function() {
+      this.subscribeWishList();
+      this.subscribeProductView();
+      return this.subscribeCategoryView();
+    };
+
+    Tracker.prototype.subscribeCategoryView = function() {
+      var _this = this;
+      return jQuery('.category-products .btn-cart').click(function(e) {
+        var item, item_id, match;
+        item = jQuery(e.target);
+        item = item.parent().parent();
+        if ((match = /\/checkout\/.+\/product\/\d+\//.exec(item.attr('onclick')))) {
+          item_id = match[match.length - 1];
+          return _this.reg.registerItemAddToCart(item_id);
+        }
+      });
+    };
+
+    Tracker.prototype.subscribeWishList = function() {
       var _this = this;
       jQuery('.my-wishlist .btn-add').click(function() {
         var get_item_id;
@@ -328,7 +350,7 @@
           return _this.reg.registerItemAddToCart(item_id);
         });
       });
-      jQuery('.my-wishlist .cart-cell').each(function(_, e) {
+      return jQuery('.my-wishlist .cart-cell').each(function(_, e) {
         var cell, item_id;
         cell = jQuery(e);
         item_id = jQuery('[id^="product-price-"]', cell).attr('id').gsub(/^product-price-/, '');
@@ -336,22 +358,17 @@
           return _this.reg.registerItemAddToCart(item_id);
         });
       });
-      jQuery('.product-view form').each(function(_, f) {
+    };
+
+    Tracker.prototype.subscribeProductView = function() {
+      var _this = this;
+      return jQuery('.product-view form').each(function(_, f) {
         var form, item_id;
         form = jQuery(f);
         item_id = form.find("input[name='product']").val();
         return jQuery('.btn-cart', form).click(function() {
           return _this.reg.registerItemAddToCart(item_id);
         });
-      });
-      return jQuery('.category-products .btn-cart').click(function(e) {
-        var item, item_id, match;
-        item = jQuery(e.target);
-        item = item.parent().parent();
-        if ((match = /\/checkout\/.+\/product\/\d+\//.exec(item.attr('onclick')))) {
-          item_id = match[match.length - 1];
-          return _this.reg.registerItemAddToCart(item_id);
-        }
       });
     };
 

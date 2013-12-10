@@ -6,8 +6,19 @@ class Tracker
 		@subscribeAddToCard()
 
 	subscribeAddToCard: =>
-		# Список пожеланий
+		@subscribeWishList()
+		@subscribeProductView()
+		@subscribeCategoryView()
 
+	subscribeCategoryView: =>
+		jQuery('.category-products .btn-cart').click (e) =>
+			item = jQuery(e.target)
+			item = item.parent().parent()
+			if (match = /\/checkout\/.+\/product\/\d+\//.exec item.attr('onclick'))
+				item_id = match[match.length - 1]
+				@reg.registerItemAddToCart item_id
+
+	subscribeWishList: =>
 		# Добавить все в корзину
 		jQuery('.my-wishlist .btn-add').click =>
 			get_item_id = (e) -> jQuery(e).attr('id').gsub(/^product-price-/, '')
@@ -20,19 +31,11 @@ class Tracker
 			item_id = jQuery('[id^="product-price-"]', cell).attr('id').gsub(/^product-price-/, '')
 			jQuery('.btn-cart', cell).click => @reg.registerItemAddToCart item_id
 
-		# Карточка продукта
+	subscribeProductView: =>
 		jQuery('.product-view form').each (_, f) =>
 			form = jQuery(f)
 			item_id = form.find("input[name='product']").val()
 			jQuery('.btn-cart', form).click =>
-				@reg.registerItemAddToCart item_id
-
-		# Список продуктов в категории
-		jQuery('.category-products .btn-cart').click (e) =>
-			item = jQuery(e.target)
-			item = item.parent().parent()
-			if (match = /\/checkout\/.+\/product\/\d+\//.exec item.attr('onclick'))
-				item_id = match[match.length - 1]
 				@reg.registerItemAddToCart item_id
 
 	subscribeCompare: =>
@@ -49,9 +52,6 @@ class Tracker
 			cat = @currentCategory()
 			@reg.registerItem item_id, [cat] if cat && cat.length > 0
 			@reg.registerItemViewAction item_id
-
-#      form.find('.link-wishlist').click () =>
-#        @reg.registerUserItemAction @userId(), item_id, 'like'
 
 	currentCategory: =>
 		item_cat = (item) ->
