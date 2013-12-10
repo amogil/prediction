@@ -353,10 +353,13 @@
     Tracker.prototype.trackProductView = function() {
       var _this = this;
       return jQuery('.product-view form').each(function(_, f) {
-        var form, item_id;
+        var cat, form, item_id;
         form = jQuery(f);
         item_id = form.find("input[name='product']").val();
-        _this.reg.registerItem(item_id, [_this.currentCategory()]);
+        cat = _this.currentCategory();
+        if (cat && cat.length > 0) {
+          _this.reg.registerItem(item_id, [cat]);
+        }
         return _this.reg.registerItemViewAction(item_id);
       });
     };

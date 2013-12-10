@@ -31,7 +31,8 @@ class Tracker
 		jQuery('.product-view form').each (_, f) =>
 			form = jQuery(f)
 			item_id = form.find("input[name='product']").val()
-			@reg.registerItem item_id, [@currentCategory()]
+			cat = @currentCategory()
+			@reg.registerItem item_id, [cat] if cat && cat.length > 0
 			@reg.registerItemViewAction item_id
 
 #      form.find('.link-wishlist').click () =>
