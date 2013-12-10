@@ -319,6 +319,15 @@
 
     Tracker.prototype.subscribeAddToCard = function() {
       var _this = this;
+      jQuery('.my-wishlist .btn-add').click(function() {
+        var get_product_id;
+        get_product_id = function(e) {
+          return jQuery(e).attr('id').gsub(/^product-price-/, '');
+        };
+        return jQuery('.my-wishlist [id^="product-price-"]').map(get_product_id).each(function(product_id) {
+          return _this.reg.registerItemAddToCart(product_id);
+        });
+      });
       return jQuery('.my-wishlist .cart-cell').each(function(_, e) {
         var cell, product_id;
         cell = jQuery(e);

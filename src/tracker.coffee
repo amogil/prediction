@@ -7,6 +7,14 @@ class Tracker
 
 	subscribeAddToCard: =>
 		# Список пожеланий
+
+		# Добавить все в корзину
+		jQuery('.my-wishlist .btn-add').click =>
+			get_product_id = (e) -> jQuery(e).attr('id').gsub(/^product-price-/, '')
+			jQuery('.my-wishlist [id^="product-price-"]').map(get_product_id).each (product_id) =>
+				@reg.registerItemAddToCart product_id
+
+		# Добавить в корзину
 		jQuery('.my-wishlist .cart-cell').each (_, e) =>
 			cell = jQuery(e)
 			product_id = jQuery('[id^="product-price-"]', cell).attr('id').gsub(/^product-price-/, '')
