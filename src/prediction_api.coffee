@@ -13,7 +13,7 @@ class PredictionAPI
 
 	getRecommendations: (userId, successCallback, max_count = 3) =>
 		params = jQuery.param(pio_uid: userId, pio_n: max_count)
-		url = "/engines/itemrec/#{Settings.PREDIOCTION_ENGINE_ID}/topn.json?#{params}"
+		url = "engines/itemrec/#{Settings.PREDIOCTION_ENGINE_ID}/topn.json?#{params}"
 		@request url, successCallback
 
 	request: (path_and_qs, successCallback, data = null) =>
