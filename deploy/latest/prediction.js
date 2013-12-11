@@ -146,33 +146,38 @@
     };
 
     PredictionAPI.prototype.getRecommendations = function(userId, successCallback, max_count) {
-      var path;
+      var params, url;
       if (max_count == null) {
         max_count = 3;
       }
-      path = "/engines/itemrec/" + Settings.PREDIOCTION_ENGINE_ID + "/topn.json";
-      return this.request(path, successCallback, {
+      params = jQuery.param({
         pio_uid: userId,
         pio_n: max_count
       });
+      url = "/engines/itemrec/" + Settings.PREDIOCTION_ENGINE_ID + "/topn.json?" + params;
+      return this.request(url, successCallback);
     };
 
-    PredictionAPI.prototype.request = function(path, successCallback, data) {
-      var url,
+    PredictionAPI.prototype.request = function(path_and_qs, successCallback, data) {
+      var base_options, options, url,
         _this = this;
-      url = "" + Settings.API_URL + "/" + path;
-      if (Settings.is_debug()) {
-        console.log("Posting " + (JSON.stringify(data)) + " to " + url);
+      if (data == null) {
+        data = null;
       }
-      return jQuery.ajax({
-        url: url,
-        type: 'POST',
+      url = "" + Settings.API_URL + "/" + path_and_qs;
+      options = data ? {
+        method: 'POST',
         contentType: 'application/json',
         dataType: 'json',
-        crossDomain: true,
         data: JSON.stringify(jQuery.extend({
           pio_appkey: Settings.API_KEY
-        }, data)),
+        }, data))
+      } : {
+        method: 'GET'
+      };
+      base_options = {
+        url: url,
+        crossDomain: true,
         success: function(data) {
           if (Settings.is_debug()) {
             console.log('Success!');
@@ -186,7 +191,11 @@
             return console.log("Error: " + error + "!");
           }
         }
-      });
+      };
+      if (Settings.is_debug()) {
+        console.log("Sending " + (JSON.stringify(data || '')) + " to " + url);
+      }
+      return jQuery.ajax(jQuery.extend(base_options, options));
     };
 
     return PredictionAPI;

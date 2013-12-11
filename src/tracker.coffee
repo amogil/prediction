@@ -20,7 +20,6 @@ class Tracker
 		on_sucess = (data) -> console.log(data)
 		@api.getRecommendations(@reg.userId(), on_sucess)
 
-
 	subscribeAddToWishlistAtCompareView: =>
 		jQuery('.compare-table .link-wishlist').click (e) =>
 			item = jQuery(e.target)
