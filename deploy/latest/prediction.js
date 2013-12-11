@@ -365,12 +365,12 @@
     }
 
     Tracker.prototype.injectRecommendations = function() {
-      var category_id, on_sucess;
-      on_sucess = function(data) {
+      var category_id, on_sucdess;
+      on_sucdess = function(data) {
         return console.log(data);
       };
       if (jQuery('.category-products').length > 0 && (category_id = this.currentCategory())) {
-        this.api.getRecommendations(this.reg.userId(), category_id, on_sucess);
+        this.api.getRecommendations(this.reg.userId(), category_id, on_sucdess);
         return console.log("Product list for category " + category_id);
       }
     };
