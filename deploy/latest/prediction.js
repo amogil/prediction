@@ -154,7 +154,7 @@
         pio_uid: userId,
         pio_n: max_count
       });
-      url = "/engines/itemrec/" + Settings.PREDIOCTION_ENGINE_ID + "/topn.json?" + params;
+      url = "engines/itemrec/" + Settings.PREDIOCTION_ENGINE_ID + "/topn.json?" + params;
       return this.request(url, successCallback);
     };
 
