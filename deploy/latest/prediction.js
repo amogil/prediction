@@ -152,7 +152,8 @@
       }
       params = jQuery.param({
         pio_uid: userId,
-        pio_n: max_count
+        pio_n: max_count,
+        pio_appkey: Settings.API_KEY
       });
       url = "engines/itemrec/" + Settings.PREDIOCTION_ENGINE_ID + "/topn.json?" + params;
       return this.request(url, successCallback);
