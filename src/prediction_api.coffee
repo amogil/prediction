@@ -11,6 +11,10 @@ class PredictionAPI
 	registerUserItemAction: (userId, itemId, action, successCallback) =>
 		@request 'actions/u2i.json', successCallback, pio_uid: userId, pio_iid: itemId, pio_action: action
 
+	getRecommendations: (userId, max_count = 3) =>
+		path = "/engines/itemrec/#{Settings.PREDIOCTION_ENGINE_ID}/topn.json"
+		@request path, successCallback, pio_uid: userId, pio_n: max_count
+
 	request: (path, successCallback, data) =>
 		url = "#{Settings.API_URL}/#{path}"
 		console.log("Posting #{JSON.stringify(data)} to #{url}") if Settings.is_debug()

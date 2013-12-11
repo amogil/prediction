@@ -117,6 +117,7 @@
   PredictionAPI = (function() {
     function PredictionAPI() {
       this.request = __bind(this.request, this);
+      this.getRecommendations = __bind(this.getRecommendations, this);
       this.registerUserItemAction = __bind(this.registerUserItemAction, this);
       this.registerItem = __bind(this.registerItem, this);
       this.registerUser = __bind(this.registerUser, this);
@@ -141,6 +142,18 @@
         pio_uid: userId,
         pio_iid: itemId,
         pio_action: action
+      });
+    };
+
+    PredictionAPI.prototype.getRecommendations = function(userId, max_count) {
+      var path;
+      if (max_count == null) {
+        max_count = 3;
+      }
+      path = "/engines/itemrec/" + Settings.PREDIOCTION_ENGINE_ID + "/topn.json";
+      return this.request(path, successCallback, {
+        pio_uid: userId,
+        pio_n: max_count
       });
     };
 
@@ -298,13 +311,15 @@
 
     Settings.MODE = 'debug';
 
-    Settings.API_KEY = 'LSDmAk7qzp32uv4UXLtFIX1mfl9mOdBOskNFMU59BmCjZb5SfuMkMWrqLDtLrfR2';
+    Settings.API_KEY = 'KdpSqVJNTquC4wzt0vuW8898gunhCNaoiDZXyCbUbIalFcE1FyBtsOZvZhF4tjeu';
 
     Settings.API_URL = 'http://193.107.237.171:81';
 
     Settings.USER_ID_COOKIE_NAME = 'puid';
 
     Settings.INFO_COOKIE_NAME = 'pdt';
+
+    Settings.PREDIOCTION_ENGINE_ID = 'r-1';
 
     Settings.is_debug = function() {
       return this.MODE === 'debug';
@@ -326,7 +341,9 @@
       this.subscribeAddToWishlistAtProductView = __bind(this.subscribeAddToWishlistAtProductView, this);
       this.subscribeAddToWishlistAtCategoryView = __bind(this.subscribeAddToWishlistAtCategoryView, this);
       this.subscribeAddToWishlistAtCompareView = __bind(this.subscribeAddToWishlistAtCompareView, this);
+      this.injectRecommendations = __bind(this.injectRecommendations, this);
       this.reg = new Registerer();
+      this.api = new PredictionAPI();
       this.trackProductView();
       this.subscribeCompareLinks();
       this.subscribeAddToCartAtWishList();
@@ -336,7 +353,12 @@
       this.subscribeAddToWishlistAtProductView();
       this.subscribeAddToWishlistAtCategoryView();
       this.subscribeAddToWishlistAtCompareView();
+      this.injectRecommendations();
     }
+
+    Tracker.prototype.injectRecommendations = function() {
+      return console.log(this.api.getRecommendations(this.reg.userId()));
+    };
 
     Tracker.prototype.subscribeAddToWishlistAtCompareView = function() {
       var _this = this;

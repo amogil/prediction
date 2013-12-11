@@ -1,6 +1,7 @@
 class Tracker
 	constructor: ->
 		@reg = new Registerer()
+		@api = new PredictionAPI()
 		@trackProductView()
 		@subscribeCompareLinks()
 
@@ -12,6 +13,11 @@ class Tracker
 		@subscribeAddToWishlistAtProductView()
 		@subscribeAddToWishlistAtCategoryView()
 		@subscribeAddToWishlistAtCompareView()
+
+		@injectRecommendations()
+
+	injectRecommendations: =>
+		console.log(@api.getRecommendations(@reg.userId()))
 
 	subscribeAddToWishlistAtCompareView: =>
 		jQuery('.compare-table .link-wishlist').click (e) =>
