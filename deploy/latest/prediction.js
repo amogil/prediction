@@ -151,7 +151,7 @@
         max_count = 3;
       }
       path = "/engines/itemrec/" + Settings.PREDIOCTION_ENGINE_ID + "/topn.json";
-      return this.request(path, successCallback, {
+      return this.request(path, (function() {}), {
         pio_uid: userId,
         pio_n: max_count
       });

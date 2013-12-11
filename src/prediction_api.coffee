@@ -13,7 +13,7 @@ class PredictionAPI
 
 	getRecommendations: (userId, max_count = 3) =>
 		path = "/engines/itemrec/#{Settings.PREDIOCTION_ENGINE_ID}/topn.json"
-		@request path, successCallback, pio_uid: userId, pio_n: max_count
+		@request path, (() -> ), pio_uid: userId, pio_n: max_count
 
 	request: (path, successCallback, data) =>
 		url = "#{Settings.API_URL}/#{path}"
