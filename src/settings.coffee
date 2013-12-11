@@ -4,6 +4,5 @@ class Settings
 	@API_URL: 'http://193.107.237.171:81'
 	@USER_ID_COOKIE_NAME: 'puid'
 	@INFO_COOKIE_NAME: 'pdt'
-	@PREDIOCTION_ENGINE_ID: 'r-1'
 
 	@is_debug: () -> @.MODE == 'debug'

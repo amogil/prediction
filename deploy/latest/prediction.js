@@ -145,7 +145,7 @@
       });
     };
 
-    PredictionAPI.prototype.getRecommendations = function(userId, successCallback, max_count) {
+    PredictionAPI.prototype.getRecommendations = function(userId, categoryId, successCallback, max_count) {
       var params, url;
       if (max_count == null) {
         max_count = 3;
@@ -155,7 +155,7 @@
         pio_n: max_count,
         pio_appkey: Settings.API_KEY
       });
-      url = "engines/itemrec/" + Settings.PREDIOCTION_ENGINE_ID + "/topn.json?" + params;
+      url = "engines/itemrec/" + categoryId + "/topn.json?" + params;
       return this.request(url, successCallback);
     };
 
@@ -329,8 +329,6 @@
 
     Settings.INFO_COOKIE_NAME = 'pdt';
 
-    Settings.PREDIOCTION_ENGINE_ID = 'r-1';
-
     Settings.is_debug = function() {
       return this.MODE === 'debug';
     };
@@ -367,11 +365,14 @@
     }
 
     Tracker.prototype.injectRecommendations = function() {
-      var on_sucess;
+      var category_id, on_sucess;
       on_sucess = function(data) {
         return console.log(data);
       };
-      return this.api.getRecommendations(this.reg.userId(), on_sucess);
+      if (jQuery('.category-products').length > 0 && (category_id = this.currentCategory())) {
+        this.api.getRecommendations(this.reg.userId(), category_id, on_sucess);
+        return console.log("Products list in category " + category_id);
+      }
     };
 
     Tracker.prototype.subscribeAddToWishlistAtCompareView = function() {
