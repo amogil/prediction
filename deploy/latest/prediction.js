@@ -371,7 +371,7 @@
       };
       if (jQuery('.category-products').length > 0 && (category_id = this.currentCategory())) {
         this.api.getRecommendations(this.reg.userId(), category_id, on_sucess);
-        return console.log("Products list in category " + category_id);
+        return console.log("Product list for category " + category_id);
       }
     };
 
