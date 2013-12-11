@@ -167,14 +167,14 @@
       }
       url = "" + Settings.API_URL + "/" + path_and_qs;
       options = data ? {
-        method: 'POST',
+        type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
         data: JSON.stringify(jQuery.extend({
           pio_appkey: Settings.API_KEY
         }, data))
       } : {
-        method: 'GET'
+        type: 'GET'
       };
       base_options = {
         url: url,

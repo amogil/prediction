@@ -20,12 +20,12 @@ class PredictionAPI
 		url = "#{Settings.API_URL}/#{path_and_qs}"
 		options =
 			if data
-				method: 'POST'
+				type: 'POST'
 				contentType: 'application/json'
 				dataType: 'json'
 				data: JSON.stringify(jQuery.extend({pio_appkey: Settings.API_KEY}, data))
 			else
-				method: 'GET'
+				type: 'GET'
 		base_options = {
 			url: url
 			crossDomain: true
