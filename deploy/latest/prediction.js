@@ -155,7 +155,7 @@
         pio_n: max_count,
         pio_appkey: Settings.API_KEY
       });
-      url = "engines/itemrec/" + categoryId + "/topn.json?" + params;
+      url = "engines/itemrec/r" + categoryId + "/topn.json?" + params;
       return this.request(url, successCallback);
     };
 
