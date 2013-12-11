@@ -145,13 +145,13 @@
       });
     };
 
-    PredictionAPI.prototype.getRecommendations = function(userId, max_count) {
+    PredictionAPI.prototype.getRecommendations = function(userId, successCallback, max_count) {
       var path;
       if (max_count == null) {
         max_count = 3;
       }
       path = "/engines/itemrec/" + Settings.PREDIOCTION_ENGINE_ID + "/topn.json";
-      return this.request(path, null, {
+      return this.request(path, successCallback, {
         pio_uid: userId,
         pio_n: max_count
       });
@@ -173,12 +173,12 @@
         data: JSON.stringify(jQuery.extend({
           pio_appkey: Settings.API_KEY
         }, data)),
-        success: function() {
+        success: function(data) {
           if (Settings.is_debug()) {
             console.log('Success!');
           }
           if (successCallback) {
-            return successCallback();
+            return successCallback(data);
           }
         },
         error: function(_xhr, _textStatus, error) {
@@ -357,7 +357,11 @@
     }
 
     Tracker.prototype.injectRecommendations = function() {
-      return console.log(this.api.getRecommendations(this.reg.userId()));
+      var on_sucess;
+      on_sucess = function(data) {
+        return console.log(data);
+      };
+      return this.api.getRecommendations(this.reg.userId(), on_sucess);
     };
 
     Tracker.prototype.subscribeAddToWishlistAtCompareView = function() {

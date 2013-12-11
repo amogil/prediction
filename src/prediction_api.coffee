@@ -11,9 +11,9 @@ class PredictionAPI
 	registerUserItemAction: (userId, itemId, action, successCallback) =>
 		@request 'actions/u2i.json', successCallback, pio_uid: userId, pio_iid: itemId, pio_action: action
 
-	getRecommendations: (userId, max_count = 3) =>
+	getRecommendations: (userId, successCallback, max_count = 3) =>
 		path = "/engines/itemrec/#{Settings.PREDIOCTION_ENGINE_ID}/topn.json"
-		@request path, null, pio_uid: userId, pio_n: max_count
+		@request path, successCallback, pio_uid: userId, pio_n: max_count
 
 	request: (path, successCallback, data) =>
 		url = "#{Settings.API_URL}/#{path}"
@@ -25,7 +25,7 @@ class PredictionAPI
 			dataType: 'json'
 			crossDomain: true
 			data: JSON.stringify(jQuery.extend({pio_appkey: Settings.API_KEY}, data))
-			success: () =>
+			success: (data) =>
 				console.log('Success!') if Settings.is_debug()
-				successCallback() if successCallback
+				successCallback(data) if successCallback
 			error: (_xhr, _textStatus, error) => console.log("Error: #{error}!") if Settings.is_debug()

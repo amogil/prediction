@@ -17,7 +17,9 @@ class Tracker
 		@injectRecommendations()
 
 	injectRecommendations: =>
-		console.log(@api.getRecommendations(@reg.userId()))
+		on_sucess = (data) -> console.log(data)
+		@api.getRecommendations(@reg.userId(), on_sucess)
+
 
 	subscribeAddToWishlistAtCompareView: =>
 		jQuery('.compare-table .link-wishlist').click (e) =>
