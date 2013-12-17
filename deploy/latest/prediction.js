@@ -325,9 +325,9 @@
 
     Settings.API_URL = 'http://95.85.33.104:81';
 
-    Settings.USER_ID_COOKIE_NAME = 'puid';
+    Settings.USER_ID_COOKIE_NAME = '__puid';
 
-    Settings.INFO_COOKIE_NAME = 'pdt';
+    Settings.INFO_COOKIE_NAME = '__pdt';
 
     Settings.is_debug = function() {
       return this.MODE === 'debug';
