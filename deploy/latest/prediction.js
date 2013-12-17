@@ -321,9 +321,9 @@
 
     Settings.MODE = 'debug';
 
-    Settings.API_KEY = 'LSDmAk7qzp32uv4UXLtFIX1mfl9mOdBOskNFMU59BmCjZb5SfuMkMWrqLDtLrfR2';
+    Settings.API_KEY = 'loBG9uPwcMJ5sh6CGGos0Zgb4qEWILxlXfpmP6IUdnWh0dyxdHkGtKR1CRWrUjIE';
 
-    Settings.API_URL = 'http://193.107.237.171:81';
+    Settings.API_URL = 'http://95.85.33.104:81';
 
     Settings.USER_ID_COOKIE_NAME = 'puid';
 
